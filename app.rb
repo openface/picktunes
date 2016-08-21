@@ -9,6 +9,8 @@ require 'open-uri'
 configure do
   enable :sessions
   set :database, ENV['DATABASE_URL'] || 'mysql://root@localhost/PICKTUNE'
+
+  # https://affiliate.itunes.apple.com/resources/documentation/genre-mapping/
   set :genres, {
     2  => "Blues",
     11 => "Jazz",
