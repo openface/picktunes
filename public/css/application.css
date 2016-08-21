@@ -32,7 +32,7 @@ tr.last_game {
 	justify-content:center;
 }
 .scorecard {
-	flex: 1 1 30%;
+	flex: 1 1 250px;
 	text-align:center;
 	margin:0 10px;
 	min-width:250px;
