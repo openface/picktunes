@@ -13,6 +13,8 @@ var Game = (function() {
             $.post("/endgame", { score: score }).done(function(data) {
                 window.location.replace("/scoreboard?last_game_id=" + data.last_game_id);
             });
+            $('#content').html($('#pleaseWait').tmpl());
+            return;
         }
 
         $('#counter').html(counter)
