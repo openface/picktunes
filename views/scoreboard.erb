@@ -8,37 +8,39 @@
       <% end %>
 
       <div class="u-pull-left">
-        <h3>Top Players</h3>
+        <h4>Top Players</h4>
       </div>
       <div class="u-pull-right">
         <a class="button button-primary" href="/">Play Again</a>
       </div>
       <br class="u-cf" />
-      <% @grouped_games.each do |genre,games| %>
-	<div class="scorecard">
-          <h5><%=settings.genres[genre]%></h5>
-          <table class="u-full-width">
-            <thead>
-              <tr>
-		<th>#</th>
-                <th>Name</th>
-                <th>Score</th>
-                <th>Date</th>
-              </tr>
-            </thead>
-            <tbody>
-              <% games.each_with_index do |game,index| %>
-                <tr class="<%=params[:last_game_id]==game.id.to_s ? 'last_game' : ''%>">
-		  <td><strong><%=index + 1%></strong></td>
-                  <td><%=game[:username]%></td>
-                  <td style="text-align:center;"><strong><%=game[:score]%></strong></td>
-                  <td><%=game[:created_at].strftime("%m/%d/%Y")%></td>
+      <div class="scores">
+        <% @grouped_games.each do |genre,games| %>
+          <div class="scorecard">
+            <h5><strong><%=settings.genres[genre]%></strong></h5>
+            <table class="u-full-width">
+              <thead>
+                <tr>
+                  <th>#</th>
+                  <th>Name</th>
+                  <th>Score</th>
+                  <th>Date</th>
                 </tr>
-              <% end %>
-            </tbody>
-          </table>
-	</div>
-      <% end %>
+              </thead>
+              <tbody>
+                <% games.slice(0,10).each_with_index do |game,index| %>
+                  <tr class="<%=params[:last_game_id]==game.id.to_s ? 'last_game' : ''%>">
+                    <td><strong><%=index + 1%></strong></td>
+                    <td><%=game[:username]%></td>
+                    <td style="text-align:center;"><strong><%=game[:score]%></strong></td>
+                    <td><%=game[:created_at].strftime("%m/%d/%Y")%></td>
+                  </tr>
+                <% end %>
+              </tbody>
+            </table>
+          </div>
+        <% end %>
+      </div>
     </div>
   </div>
 </div>
