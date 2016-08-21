@@ -6,6 +6,9 @@ require 'sinatra/sequel'
 require 'json'
 require 'open-uri'
 
+#
+# Config
+
 configure do
   enable :sessions
   set :database, ENV['DATABASE_URL'] || 'mysql://root@localhost/PICKTUNE'
@@ -23,6 +26,9 @@ configure do
   }
 end
 
+#
+# Database
+
 migration "create tables" do
   database.create_table :games do
     primary_key :id
@@ -34,9 +40,10 @@ migration "create tables" do
 end
 
 class Game < Sequel::Model
-  many_to_one :bar
 end
 
+#
+# Routes
 
 get '/' do
   erb :home
