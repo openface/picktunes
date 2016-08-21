@@ -8,7 +8,7 @@ require 'open-uri'
 
 configure do
   enable :sessions
-  set :database, 'mysql://root@localhost/PICKTUNE'
+  set :database, ENV['DATABASE_URL'] || 'mysql://root@localhost/PICKTUNE'
   set :genres, {
     2  => "Blues",
     11 => "Jazz",
@@ -21,11 +21,6 @@ configure do
   }
 end
 
-configure :production do
-  set :database, 'mysql://root@localhost/PICKTUNE'
-end
-
-puts "the games table doesn't exist" if !database.table_exists?('games')
 migration "create tables" do
   database.create_table :games do
     primary_key :id
