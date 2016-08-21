@@ -1,12 +1,14 @@
 <div class="container">
   <div class="row">
     <div class="twelve columns" style="margin-top: 10%">
-     <div style="text-align:center;margin-bottom:50px;">
-        <h2>Game Over!</h2>
+      <% if params[:last_game_id] %>
+      <div style="text-align:center;margin-bottom:50px;">
+        <h1>Game Over. You scored <strong><%=@last_game.score%></strong> points!</h1>
       </div>
+      <% end %>
 
       <div class="u-pull-left">
-        <h1>Top Players</h1>
+        <h3>Top Players</h3>
       </div>
       <div class="u-pull-right">
         <a class="button button-primary" href="/">Play Again</a>
@@ -21,13 +23,13 @@
 		<th>#</th>
                 <th>Name</th>
                 <th>Score</th>
-                <th>Date Played</th>
+                <th>Date</th>
               </tr>
             </thead>
             <tbody>
               <% games.each_with_index do |game,index| %>
                 <tr class="<%=params[:last_game_id]==game.id.to_s ? 'last_game' : ''%>">
-		  <td><%=index + 1%></td>
+		  <td><strong><%=index + 1%></strong></td>
                   <td><%=game[:username]%></td>
                   <td style="text-align:center;"><strong><%=game[:score]%></strong></td>
                   <td><%=game[:created_at].strftime("%m/%d/%Y")%></td>

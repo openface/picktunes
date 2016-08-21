@@ -1,15 +1,20 @@
 <div class="container">
   <div class="row">
+      <div class="u-full-width" id="message">&#9836; <span></span> &#9835;</div>
+  </div>
+</div>
+
+<div class="container">
+  <div class="row">
     <div class="twelve columns" style="margin-top: 10%">
       <div style="text-align:center;margin-bottom:50px;">
         <h2>Name That Tune in <span id="counter">20</span> Seconds!</h2>
       </div>
-
       <div class="u-pull-left">
 	<h1>Round <span id="round">1</span></h1>
       </div>
       <div class="u-pull-right">
-      	<h1>Score: <span id="score">0</span></h1>
+      	<h1>Score <span id="score">0</span></h1>
       </div>
       <br class="u-cf" />
 
@@ -31,7 +36,6 @@
 
 <script>
 $(function() {
-	Game.player = '<%=session[:user]%>';
 	Game.songs = <%=@songs.shuffle.to_json%>;
 	Game.startRound();
 });

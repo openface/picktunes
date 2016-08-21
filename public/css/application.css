@@ -8,7 +8,7 @@
 }
 .song a,.song a:active {
 	display:block;
-	background-color:#eee;
+	background-color:#f9f9f9;
 	text-decoration:none;
 	cursor:pointer;
 	margin-bottom:3px;
@@ -17,13 +17,13 @@
 	color:#000;
 }
 .song a:hover {
-	background:#ddd;
-	color:#000;
+	background:#5bc0de;
+	color:#fff;
 }
 .song img {
 	float:left;
 	margin:10px;
-	border:1px solid #fff;
+	border:2px solid #fff;
 }
 .song h5 {
 	padding-top:10px;
@@ -31,22 +31,39 @@
 }
 
 tr.last_game {
-	background:yellow;
+	background:#ffff99;
 }
 .scorecard {
 	float:left;
 	text-align:center;
-	width:275px;
-	padding:10px;
+	width:265px;
+	padding:5px;
+	margin-left:20px;
 	margin-right:20px;
 	margin-bottom:20px;
 	border-radius:5px;
 	border:1px solid #000;
 }
 .scorecard table td, .scorecard table th {
-	padding:2px 3px;
+	padding:0 1px;
+}
+#counter {
+	font-size:55px;
+}
+#round {
+	font-size:74px;
 }
 #score {
-	font-size:48px;
-	animation: bounceIn 2s;
+	font-size:74px;
+}
+#message {
+	display:none;
+	position:absolute;
+	color: #468847;
+	background: #dff0d8;
+	margin-top:20px;
+	border:2px solid #d6e9c6;
+	text-align:center;
+	padding:5px;
+	font-size:24px;
 }

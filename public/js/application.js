@@ -1,6 +1,5 @@
 var Game = (function() {
     var songs;
-    var player;
     var counter;
     var score = 0;
     var round = 0;
@@ -22,7 +21,7 @@ var Game = (function() {
         selectedSong = roundSongs[Math.floor(Math.random() * roundSongs.length)];
         //console.log(selectedSong);
 
-        console.log("Player " + Game.player + " (score: " + score + ") Starting round: "+round);
+        console.log("Score: " + score + " Round: " + round);
         $('#round').html(round);
 
         var audio = new Audio(selectedSong['audio']);
@@ -37,6 +36,7 @@ var Game = (function() {
                 $('#score').html(score);
                 console.log("We have a winner!");
                 new Audio("/sounds/right.mp3").play();
+                notify('You got it!');
             } else {
                 /* wrong answer */
                 console.log("Wrong answer!");                
@@ -54,14 +54,25 @@ var Game = (function() {
             $('#counter').html(counter);
             if (counter == 0) {
                 console.log("Times up!");
+                new Audio("/sounds/wrong.mp3").play();
+
                 audio.pause();
                 audio.currentTime = 0;
                 clearInterval(countdown);
                 startRound();
             }
         }, 1000);
+
     };
 
+    var notify = function(msg) {
+        $('#message').show();
+        $('#message span').html(msg);
+        setTimeout(function() {
+            $('#message').hide();
+        }, 3000);
+    };
+    
     return {
         startRound: startRound
     };
