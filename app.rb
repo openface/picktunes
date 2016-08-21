@@ -89,7 +89,7 @@ end
 
 get '/scoreboard/?' do
   @grouped_games = Game.order(Sequel.desc(:score)).to_hash_groups(:genre)
-  @last_game = Game.find(params[:last_game_id]) if params[:last_game_id]
+  @last_game = Game.find(id: params[:last_game_id]) if params[:last_game_id]
   erb :scoreboard
 end
 
