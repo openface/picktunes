@@ -1,12 +1,4 @@
-.right {
-	background:green;
-}
-.wrong {
-	background:red;
-}
-.song {
-}
-.song a,.song a:active {
+.song a {
 	display:block;
 	background-color:#f9f9f9;
 	text-decoration:none;
@@ -16,7 +8,7 @@
 	border:1px solid #ccc;
 	color:#000;
 }
-.song a:hover {
+.song a:active {
 	background:#5bc0de;
 	color:#fff;
 }
