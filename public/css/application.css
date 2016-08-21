@@ -1,0 +1,52 @@
+.right {
+	background:green;
+}
+.wrong {
+	background:red;
+}
+.song {
+}
+.song a,.song a:active {
+	display:block;
+	background-color:#eee;
+	text-decoration:none;
+	cursor:pointer;
+	margin-bottom:3px;
+	border-radius:5px;
+	border:1px solid #ccc;
+	color:#000;
+}
+.song a:hover {
+	background:#ddd;
+	color:#000;
+}
+.song img {
+	float:left;
+	margin:10px;
+	border:1px solid #fff;
+}
+.song h5 {
+	padding-top:10px;
+	margin-bottom:0;
+}
+
+tr.last_game {
+	background:yellow;
+}
+.scorecard {
+	float:left;
+	text-align:center;
+	width:275px;
+	padding:10px;
+	margin-right:20px;
+	margin-bottom:20px;
+	border-radius:5px;
+	border:1px solid #000;
+}
+.scorecard table td, .scorecard table th {
+	padding:2px 3px;
+}
+#score {
+	font-size:48px;
+	animation: bounceIn 2s;
+}
