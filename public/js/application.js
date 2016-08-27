@@ -86,8 +86,9 @@ function shareScoreToFacebook(message) {
       method: 'feed',
       link: 'https://picktun.es',
       name: message,
-      caption: 'Play Name That Tune with strangers in a highly competitive music guessing game.',
-      display: 'popup',
+      description: 'Play Name That Tune with strangers in a highly competitive music guessing game.',
+      caption: 'picktun.es',
+      display: 'popup'
       }, function(response){});
 }
 
