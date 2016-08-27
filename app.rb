@@ -1,8 +1,6 @@
 require 'bundler/setup'
 Bundler.require(:default)
 require "sinatra/reloader" if development?
-require 'sinatra'
-require 'sinatra/sequel'
 require 'json'
 require 'open-uri'
 
