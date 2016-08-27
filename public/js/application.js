@@ -80,3 +80,27 @@ var Game = (function() {
     };
  
 })();
+
+function shareScoreToFacebook(message) {
+    FB.ui({
+      method: 'feed',
+      link: 'https://picktun.es',
+      name: message,
+      caption: 'Play Name That Tune with strangers in a highly competitive music guessing game.',
+      display: 'popup',
+      }, function(response){});
+}
+
+function TMP_shareScoreToFacebook(message) {
+    var url = 'http://www.facebook.com/dialog/feed?app_id=1667972823529106' +
+        '&link=http://picktun.es' +
+        '&picture=' +
+        '&name=' + encodeURIComponent(message) + 
+        '&description=' + encodeURIComponent('Play Name That Tune with strangers in a highly competitive music guessing game.') + 
+        '&caption=picktun.es' + 
+        '&display=popup'; 
+    window.open(url, 
+                'feedDialog', 
+                'toolbar=0,status=0,width=560,height=350'
+    ); 
+}

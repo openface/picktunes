@@ -3,7 +3,12 @@
     <div class="twelve columns" style="margin-top: 10%">
       <% if @last_game %>
         <div style="text-align:center;margin-bottom:50px;">
-          <h1>Game Over. You scored <strong><%=@last_game.score%></strong> points!</h1>
+          <h2>Game Over. You scored <strong><%=@last_game.score%></strong> <%=settings.genres[@last_game.genre].downcase%> points!</h2>
+
+	  <p>
+		<a href="javascript:shareScoreToFacebook('I scored <%=@last_game.score%> <%=settings.genres[@last_game.genre].downcase%> points on picktun.es!');">Share your score on Facebook</a>
+	  </p>
+
         </div>
       <% end %>
 
@@ -41,6 +46,8 @@
           </div>
         <% end %>
       </div>
+
+
     </div>
   </div>
 </div>
