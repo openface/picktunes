@@ -84,7 +84,7 @@ var Game = (function() {
 function shareScoreToFacebook(message) {
     FB.ui({
       method: 'feed',
-      link: 'https://picktun.es',
+      link: 'http://picktun.es',
       name: message,
       description: 'Play Name That Tune with strangers in a highly competitive music guessing game.',
       caption: 'picktun.es',
