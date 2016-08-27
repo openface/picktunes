@@ -47,20 +47,12 @@ tr.last_game {
 #counter {
 	font-size:55px;
 }
+.nearzero {
+	color: red;
+}
 #round {
-	font-size:74px;
+	font-size:64px;
 }
 #score {
-	font-size:74px;
-}
-#message {
-	display:none;
-	position:absolute;
-	color: #468847;
-	background: #dff0d8;
-	margin-top:20px;
-	border:2px solid #d6e9c6;
-	text-align:center;
-	padding:5px;
-	font-size:24px;
+	font-size:64px;
 }

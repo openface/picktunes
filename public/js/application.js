@@ -13,10 +13,11 @@ var Game = (function() {
             $.post("/endgame", { score: score }).done(function(data) {
                 window.location.replace("/scoreboard?last_game_id=" + data.last_game_id);
             });
-            $('#content').html($('#pleaseWait').tmpl());
+            $('#content').html($('#pleaseWaitTemplate').tmpl());
             return;
         }
 
+        $('#counter').removeClass('nearzero');
         $('#counter').html(counter)
 
         roundSongs = Game.songs.splice(0,4);
@@ -29,52 +30,53 @@ var Game = (function() {
         var audio = new Audio(selectedSong['audio']);
         audio.play();
 
-        $("#songsList").html($("#songsTemplate").tmpl(roundSongs));
+        $("#songsList").hide().html($("#songsTemplate").tmpl(roundSongs)).fadeIn('slow');
 
         $('.song a').click(function() {
+            audio.pause();
+            audio.currentTime = 0;
+            clearInterval(countdown);
             if ($(this).data('id') == selectedSong['id']) {
                 /* correct answer */
                 score = score + counter;
                 $('#score').html(score);
                 console.log("We have a winner!");
                 new Audio("/sounds/right.mp3").play();
-                notify('You got it!');
+                $("#songsList").html($("#rightAnswerTemplate").tmpl());
             } else {
                 /* wrong answer */
                 console.log("Wrong answer!");                
                 new Audio("/sounds/wrong.mp3").play();
+                $("#songsList").html($("#wrongAnswerTemplate").tmpl());
             }
-            audio.pause();
-            audio.currentTime = 0;
-            clearInterval(countdown);
-            startRound();
+            setTimeout(function(){
+                startRound();
+            }, 2000);
         });
 
 
         var countdown = setInterval(function() {
             counter--;
             $('#counter').html(counter);
+            if (counter <= 5) {
+                $('#counter').addClass('nearzero');
+            }
             if (counter == 0) {
                 console.log("Times up!");
                 new Audio("/sounds/wrong.mp3").play();
+                $("#songsList").html($("#wrongAnswerTemplate").tmpl());
 
                 audio.pause();
                 audio.currentTime = 0;
                 clearInterval(countdown);
-                startRound();
+                setTimeout(function(){
+                    startRound();
+                }, 2000);
             }
         }, 1000);
 
     };
 
-    var notify = function(msg) {
-        $('#message').show();
-        $('#message span').html(msg);
-        setTimeout(function() {
-            $('#message').hide();
-        }, 3000);
-    };
-    
     return {
         startRound: startRound
     };
