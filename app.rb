@@ -86,7 +86,18 @@ post '/endgame/?' do
 end
 
 get '/scoreboard/?' do
-  @grouped_games = Game.order(Sequel.desc(:score)).to_hash_groups(:genre)
+#  @grouped_games = Game.order(Sequel.desc(:score)).to_hash_groups(:genre)
+
+  games = Game.order(Sequel.desc(:score)).to_hash_groups(:genre)
+  scores = {}
+  games.each do |genre,games|
+    scores[genre] = []
+    games.each do |game|
+      scores[genre] << game unless scores[genre].find { |s| s.username == game.username }
+    end
+  end
+
+  @grouped_games = scores
   @last_game = Game.find(id: params[:last_game_id]) if params[:last_game_id]
   erb :scoreboard
 end
