@@ -56,3 +56,7 @@ tr.last_game {
 #score {
 	font-size:64px;
 }
+.green {
+	color: #00b400;
+	font-weight: bold;
+}
