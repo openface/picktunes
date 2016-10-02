@@ -1,60 +1,101 @@
-<div class="container">
+<div class="container" id="content"></div>
+
+<script id="mobileTemplate" type="text/html">
+	<div class="row" style="margin: 150px auto;width:75%;text-align:center;" id="mobilePrompt">
+		<p>Since you're using a mobile device, and mobile devices don't support autoplay, you'll need to click once more to start the game.</p>
+		<input class="button-primary" type="button" value="Start The Music!" id="startMusic">
+	</div>
+</script>
+
+<script id="gameTemplate" type="text/html">
   <div class="row">
     <div class="twelve columns" style="margin-top: 10%" id="content">
       <div style="text-align:center;">
         <h3>Name That Tune in <span id="counter">20</span> Seconds!</h3>
       </div>
       <div class="u-pull-left">
-	<h4>Round <span id="round">1</span></h4>
+        <h4>Round <span id="round">1</span></h4>
       </div>
       <div class="u-pull-right">
-      	<h4>Score <span id="score">0</span></h4>
+        <h4>Score <span id="score">0</span></h4>
       </div>
       <br class="u-cf" />
 
       <div id="songsList"></div>
-
     </div>
-
-    <script id="songsTemplate" type="text/x-jquery-tmpl">
-      <div class="song">
-        <a class="u-full-width" data-id="${id}">
-          <img src="${image}" width="60" height="60" />
-          <h5>${name}</h5>
-          ${artist}
-          <br class="u-cf" />
-        </a>
-      </div>
-    </script>
-
-    <script id="pleaseWaitTemplate" type="text/x-jquery-tmpl">
-      <div style="text-align:center;margin-top:20px;">
-        <h1>Please wait...</h1>
-      </div>
-    </script>
-
-    <script id="rightAnswerTemplate" type="text/x-jquery-tmpl">
-      <div style="text-align:center;margin-top:20px;">
-	<img src="/images/right.png" />
-      </div>
-    </script>
-
-    <script id="wrongAnswerTemplate" type="text/x-jquery-tmpl">
-      <div style="text-align:center;margin-top:20px;">
-	<img src="/images/wrong.png" />
-      </div>
-    </script>
-
   </div>
-</div>
+</script>
+
+<script id="songsTemplate" type="text/x-jquery-tmpl">
+  <div class="song">
+    <a class="u-full-width" data-id="${id}">
+      <img src="${image}" width="60" height="60" />
+      <h5>${name}</h5>
+      ${artist}
+      <br class="u-cf" />
+    </a>
+  </div>
+</script>
+
+<script id="pleaseWaitTemplate" type="text/x-jquery-tmpl">
+  <div style="text-align:center;margin-top:20px;">
+    <h1>Please wait...</h1>
+  </div>
+</script>
+
+<script id="rightAnswerTemplate" type="text/x-jquery-tmpl">
+  <div style="text-align:center;margin-top:20px;">
+    <img src="/images/right.png" />
+  </div>
+</script>
+
+<script id="wrongAnswerTemplate" type="text/x-jquery-tmpl">
+  <div style="text-align:center;margin-top:20px;">
+    <img src="/images/wrong.png" />
+  </div>
+</script>
 
 <script>
+var isMobile = {
+    Android: function() {
+        return navigator.userAgent.match(/Android/i);
+    },
+    BlackBerry: function() {
+        return navigator.userAgent.match(/BlackBerry/i);
+    },
+    iOS: function() {
+        return navigator.userAgent.match(/iPhone|iPad|iPod/i);
+    },
+    Opera: function() {
+        return navigator.userAgent.match(/Opera Mini/i);
+    },
+    Windows: function() {
+        return navigator.userAgent.match(/IEMobile/i);
+    },
+    any: function() {
+        return (isMobile.Android() || isMobile.BlackBerry() || isMobile.iOS() || isMobile.Opera() || isMobile.Windows());
+    }
+};
+
+function initGame() {
+	console.log('Initializing...');
+	FB.AppEvents.logEvent("startNewGame");
+        $("#content").html($("#gameTemplate").tmpl());
+        Game.songs = <%=@songs.shuffle.to_json%>;
+        Game.startRound();
+}
+
 $(document).on(
 	'fbload',
 	function() {
-		Game.songs = <%=@songs.shuffle.to_json%>;
-		Game.startRound();
-		FB.AppEvents.logEvent("startNewGame");
+		if(isMobile.any()) {
+			$("#content").html($("#mobileTemplate").tmpl());
+			$("#startMusic").click(function() {
+				initGame();
+			});
+		} else {
+			initGame();
+		}
 	}
 );
 </script>
