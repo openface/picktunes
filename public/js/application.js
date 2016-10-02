@@ -10,6 +10,7 @@ var Game = (function() {
 
         if (round > 10) {
             console.log("Game Over!");
+            FB.AppEvents.logEvent("endedGame");
             $.post("/endgame", { score: score }).done(function(data) {
                 window.location.replace("/scoreboard?last_game_id=" + data.last_game_id);
             });
@@ -42,11 +43,13 @@ var Game = (function() {
                 $('#score').html(score);
                 console.log("We have a winner!");
                 new Audio("/sounds/right.mp3").play();
+                FB.AppEvents.logEvent("selectedRightAnswer");
                 $("#songsList").html($("#rightAnswerTemplate").tmpl());
             } else {
                 /* wrong answer */
                 console.log("Wrong answer!");                
                 new Audio("/sounds/wrong.mp3").play();
+                FB.AppEvents.logEvent("selectedWrongAnswer");
                 $("#songsList").html($("#wrongAnswerTemplate").tmpl());
             }
             setTimeout(function(){
@@ -69,6 +72,7 @@ var Game = (function() {
                 audio.pause();
                 audio.currentTime = 0;
                 clearInterval(countdown);
+                FB.AppEvents.logEvent("roundTimedOut");
                 setTimeout(function(){
                     startRound();
                 }, 2000);

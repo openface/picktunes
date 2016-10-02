@@ -49,8 +49,12 @@
 </div>
 
 <script>
-$(function() {
-	Game.songs = <%=@songs.shuffle.to_json%>;
-	Game.startRound();
-});
+$(document).on(
+	'fbload',
+	function() {
+		Game.songs = <%=@songs.shuffle.to_json%>;
+		Game.startRound();
+		FB.AppEvents.logEvent("startNewGame");
+	}
+);
 </script>

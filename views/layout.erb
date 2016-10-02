@@ -29,6 +29,8 @@
       xfbml      : true,
       version    : 'v2.7'
     });
+    FB.AppEvents.logPageView();
+    $(document).trigger('fbload');
   };
 
   (function(d, s, id){
