@@ -5,7 +5,7 @@
       <h1>PickTun.es</h1>
       <p>Play "Name That Tune" with strangers in a highly competitive music guessing game.</p>
       <form method="post">
-        <input size="30" type="text" maxlength="20" placeholder="Pick a Name" name="user" value="<%=session[:user]%>" required>
+        <input size="30" type="text" maxlength="20" placeholder="Pick a Name" name="user" value="<%=session[:user]%>" required autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false">
 	<select style="width:250px" name="genre" required>
           <option disabled selected value="">Pick a Genre</option>
           <% settings.genres.each do |id,genre| %>

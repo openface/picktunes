@@ -48,7 +48,7 @@ get '/' do
 end
 
 post '/' do
-  redirect to('/') unless params[:user] && params[:genre]
+  redirect to('/') unless !params[:user].empty? && params[:genre]
 
   session.clear
   session[:user] = params[:user]

@@ -18,7 +18,7 @@ var Game = (function() {
         }
 
         $('#counter').removeClass('nearzero');
-        $('#counter').html(counter)
+        $('#counter').html(counter);
 
         roundSongs = Game.songs.splice(0,4);
         selectedSong = roundSongs[Math.floor(Math.random() * roundSongs.length)];
