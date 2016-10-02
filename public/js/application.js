@@ -44,17 +44,26 @@ var Game = (function() {
                 console.log("We have a winner!");
                 new Audio("/sounds/right.mp3").play();
                 FB.AppEvents.logEvent("selectedRightAnswer");
-                $("#songsList").html($("#rightAnswerTemplate").tmpl());
+
+                if (!isMobile.any()) {
+                    $("#songsList").html($("#rightAnswerTemplate").tmpl());
+                }
             } else {
                 /* wrong answer */
                 console.log("Wrong answer!");                
                 new Audio("/sounds/wrong.mp3").play();
                 FB.AppEvents.logEvent("selectedWrongAnswer");
-                $("#songsList").html($("#wrongAnswerTemplate").tmpl());
+
+                if (!isMobile.any()) {
+                    $("#songsList").html($("#wrongAnswerTemplate").tmpl());
+                }
             }
-            setTimeout(function(){
+
+            if(isMobile.any()) {
                 startRound();
-            }, 2000);
+            } else {
+                setTimeout(function(){ startRound(); }, 2000);
+            }
         });
 
 
