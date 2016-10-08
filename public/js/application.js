@@ -82,9 +82,12 @@ var Game = (function() {
                 audio.currentTime = 0;
                 clearInterval(countdown);
                 FB.AppEvents.logEvent("roundTimedOut");
-                setTimeout(function(){
+
+                if(isMobile.any()) {
                     startRound();
-                }, 2000);
+                } else {
+                    setTimeout(function(){ startRound(); }, 2000);
+                }
             }
         }, 1000);
 
