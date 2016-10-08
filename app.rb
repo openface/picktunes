@@ -52,7 +52,7 @@ post '/' do
   redirect to('/') unless !params[:user].empty? && params[:genre]
 
   session.clear
-  session[:user] = params[:user]
+  session[:user] = Rack::Utils.escape_html(params[:user])
   session[:genre] = params[:genre]
   redirect to('/play')
 end
