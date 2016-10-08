@@ -76,8 +76,11 @@ var Game = (function() {
             if (counter == 0) {
                 console.log("Times up!");
                 new Audio("/sounds/wrong.mp3").play();
-                $("#songsList").html($("#wrongAnswerTemplate").tmpl());
 
+                if (!isMobile.any()) {
+                    $("#songsList").html($("#wrongAnswerTemplate").tmpl());
+                }
+               
                 audio.pause();
                 audio.currentTime = 0;
                 clearInterval(countdown);
