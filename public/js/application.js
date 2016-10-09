@@ -49,7 +49,6 @@ var Game = (function() {
             }
 
             if(isMobile.any()) {
-                document.selection.empty(); // clear selected link for mobile
                 startRound();
             } else {
                 setTimeout(function(){ startRound(); }, 2000);
