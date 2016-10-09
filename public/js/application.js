@@ -4,6 +4,13 @@ var Game = (function() {
     var score = 0;
     var round = 0;
 
+    var setup = function(songs) {
+        console.log('Initializing...');
+        FB.AppEvents.logEvent("startNewGame");
+        this.songs = songs;
+        $("#content").html($("#gameTemplate").tmpl());
+    }
+
     var startRound = function() {
         round++;
         counter = 20;
@@ -34,38 +41,51 @@ var Game = (function() {
         $("#songsList").hide().html($("#songsTemplate").tmpl(roundSongs)).fadeIn('slow');
 
         $('.song a').click(function() {
-            audio.pause();
-            audio.currentTime = 0;
-            clearInterval(countdown);
             if ($(this).data('id') == selectedSong['id']) {
                 /* correct answer */
-                score = score + counter;
-                $('#score').html(score);
-                console.log("We have a winner!");
-                new Audio("/sounds/right.mp3").play();
-                FB.AppEvents.logEvent("selectedRightAnswer");
-
-                if (!isMobile.any()) {
-                    $("#songsList").html($("#rightAnswerTemplate").tmpl());
-                }
+                selectedRightSong();
             } else {
                 /* wrong answer */
-                console.log("Wrong answer!");                
-                new Audio("/sounds/wrong.mp3").play();
-                FB.AppEvents.logEvent("selectedWrongAnswer");
-
-                if (!isMobile.any()) {
-                    $("#songsList").html($("#wrongAnswerTemplate").tmpl());
-                }
+                selectedWrongSong();
             }
 
             if(isMobile.any()) {
+                document.selection.empty(); // clear selected link for mobile
                 startRound();
             } else {
                 setTimeout(function(){ startRound(); }, 2000);
             }
         });
 
+        var selectedRightSong = function() {
+            audio.pause();
+            audio.currentTime = 0;
+            clearInterval(countdown);
+
+            score = score + counter;
+            $('#score').html(score);
+            console.log("We have a winner!");
+            new Audio("/sounds/right.mp3").play();
+            FB.AppEvents.logEvent("selectedRightAnswer");
+
+            if (!isMobile.any()) {
+                $("#songsList").html($("#rightAnswerTemplate").tmpl());
+            }
+        };
+        
+        var selectedWrongSong = function() {
+            audio.pause();
+            audio.currentTime = 0;
+            clearInterval(countdown);
+                
+            console.log("Wrong answer!");                
+            new Audio("/sounds/wrong.mp3").play();
+            FB.AppEvents.logEvent("selectedWrongAnswer");
+
+            if (!isMobile.any()) {
+                $("#songsList").html($("#wrongAnswerTemplate").tmpl());
+            }
+        };
 
         var countdown = setInterval(function() {
             counter--;
@@ -75,15 +95,9 @@ var Game = (function() {
             }
             if (counter == 0) {
                 console.log("Times up!");
-                new Audio("/sounds/wrong.mp3").play();
 
-                if (!isMobile.any()) {
-                    $("#songsList").html($("#wrongAnswerTemplate").tmpl());
-                }
-               
-                audio.pause();
-                audio.currentTime = 0;
-                clearInterval(countdown);
+                selectedWrongSong();
+                               
                 FB.AppEvents.logEvent("roundTimedOut");
 
                 if(isMobile.any()) {
@@ -97,6 +111,7 @@ var Game = (function() {
     };
 
     return {
+        setup: setup,
         startRound: startRound
     };
  

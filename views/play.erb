@@ -56,45 +56,17 @@
 </script>
 
 <script>
-var isMobile = {
-    Android: function() {
-        return navigator.userAgent.match(/Android/i);
-    },
-    BlackBerry: function() {
-        return navigator.userAgent.match(/BlackBerry/i);
-    },
-    iOS: function() {
-        return navigator.userAgent.match(/iPhone|iPad|iPod/i);
-    },
-    Opera: function() {
-        return navigator.userAgent.match(/Opera Mini/i);
-    },
-    Windows: function() {
-        return navigator.userAgent.match(/IEMobile/i);
-    },
-    any: function() {
-        return (isMobile.Android() || isMobile.BlackBerry() || isMobile.iOS() || isMobile.Opera() || isMobile.Windows());
-    }
-};
-
-function initGame() {
-	console.log('Initializing...');
-	FB.AppEvents.logEvent("startNewGame");
-        $("#content").html($("#gameTemplate").tmpl());
-        Game.songs = <%=@songs.shuffle.to_json%>;
-        Game.startRound();
-}
-
 $(document).on(
 	'fbload',
 	function() {
+		Game.setup(<%=@songs.shuffle.to_json%>);
 		if(isMobile.any()) {
 			$("#content").html($("#mobileTemplate").tmpl());
 			$("#startMusic").click(function() {
-				initGame();
+				Game.startRound();
 			});
 		} else {
-			initGame();
+			Game.startRound();
 		}
 	}
 );
