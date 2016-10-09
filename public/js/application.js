@@ -4,11 +4,10 @@ var Game = (function() {
     var score = 0;
     var round = 0;
 
-    var setup = function(songs) {
-        console.log('Initializing...');
+    var setSongs = function(songs) {
+        console.log('Initializing songs...');
         FB.AppEvents.logEvent("startNewGame");
         this.songs = songs;
-        $("#content").html($("#gameTemplate").tmpl());
     }
 
     var startRound = function() {
@@ -111,7 +110,7 @@ var Game = (function() {
     };
 
     return {
-        setup: setup,
+        setSongs: setSongs,
         startRound: startRound
     };
  

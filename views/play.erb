@@ -59,13 +59,16 @@
 $(document).on(
 	'fbload',
 	function() {
-		Game.setup(<%=@songs.shuffle.to_json%>);
-		if(isMobile.any()) {
+		Game.setSongs(<%=@songs.shuffle.to_json%>);
+
+		if (isMobile.any()) {
 			$("#content").html($("#mobileTemplate").tmpl());
 			$("#startMusic").click(function() {
+				$("#content").html($("#gameTemplate").tmpl())
 				Game.startRound();
 			});
 		} else {
+			$("#content").html($("#gameTemplate").tmpl());
 			Game.startRound();
 		}
 	}
