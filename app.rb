@@ -60,7 +60,7 @@ end
 get '/play/?' do
   redirect to('/') unless session[:user] && session[:genre]
 
-  url = "https://itunes.apple.com/us/rss/topsongs/limit=100/genre=#{session[:genre]}/xml"
+  url = "https://itunes.apple.com/us/rss/topsongs/limit=200/genre=#{session[:genre]}/xml"
 
   doc = Nokogiri::HTML(open(url))
   songs = []
@@ -73,7 +73,7 @@ get '/play/?' do
       :audio => entry.at_xpath(".//link[@rel='enclosure']")['href']
     }
   end
-  @songs = songs
+  @songs = songs.sample(40).shuffle
 
   erb :play
 end

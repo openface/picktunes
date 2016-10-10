@@ -5,9 +5,9 @@ var Game = (function() {
     var round = 0;
 
     var setSongs = function(songs) {
-        console.log('Initializing songs...');
         FB.AppEvents.logEvent("startNewGame");
         this.songs = songs;
+        console.log('Initializing with ' + songs.length + ' songs...');
     }
 
     var startRound = function() {

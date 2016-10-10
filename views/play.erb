@@ -59,7 +59,7 @@
 $(document).on(
 	'fbload',
 	function() {
-		Game.setSongs(<%=@songs.shuffle.to_json%>);
+		Game.setSongs(<%=@songs.to_json%>);
 
 		if (isMobile.any()) {
 			$("#content").html($("#mobileTemplate").tmpl());
