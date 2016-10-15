@@ -87,15 +87,13 @@ post '/endgame/?' do
 end
 
 get '/scoreboard/?' do
-#  @grouped_games = Game.order(Sequel.desc(:score)).to_hash_groups(:genre)
-
   @last_game = Game.find(id: params[:last_game_id]) if params[:last_game_id]
 
   games = Game.order(Sequel.desc(:score)).to_hash_groups(:genre)
   scores = {}
   games.each do |genre,games|
     scores[genre] = []
-    games.each do |game|
+    games.slice(0,10).each do |game|
       unless scores[genre].find { |s| s.username == game.username }
         scores[genre] << game
         @highscore = true if @last_game && game == @last_game
