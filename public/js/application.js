@@ -13,6 +13,7 @@ var Game = (function() {
     var startRound = function() {
         round++;
         counter = 20;
+        counterPaused = true;
 
         if (round > 10) {
             console.log("Game Over!");
@@ -35,7 +36,10 @@ var Game = (function() {
         $('#round').html(round);
 
         var audio = new Audio(selectedSong['audio']);
-        audio.play();
+        audio.onloadeddata = function() {
+          audio.play();
+          counterPaused = false;
+        };
 
         $("#songsList").hide().html($("#songsTemplate").tmpl(roundSongs)).fadeIn('slow');
 
@@ -86,7 +90,9 @@ var Game = (function() {
         };
 
         var countdown = setInterval(function() {
-            counter--;
+            if (!counterPaused) {
+                counter--;
+            }
             $('#counter').html(counter);
             if (counter <= 5) {
                 $('#counter').addClass('nearzero');
