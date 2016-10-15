@@ -26,7 +26,7 @@
       <div class="scores">
         <% @grouped_games.each do |genre,games| %>
           <div class="scorecard">
-            <h5><strong><%=settings.genres[genre]%></strong> <span class="stats"><%=@averages[genre]%> avg / <%=games.size%> total</span></h5>
+            <h5><strong><%=settings.genres[genre]%></strong> <span class="stats"><%=@averages[genre]%> avg / <%=@totals[genre]%> total</span></h5>
             <table class="u-full-width">
               <thead>
                 <tr>
