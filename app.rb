@@ -93,10 +93,12 @@ get '/scoreboard/?' do
   scores = {}
   games.each do |genre,games|
     scores[genre] = []
-    games.slice(0,10).each do |game|
+    games.each_with_index do |game,index|
       unless scores[genre].find { |s| s.username == game.username }
-        scores[genre] << game
-        @highscore = true if @last_game && game == @last_game
+        if index <= 10
+          scores[genre] << game
+          @highscore = true if @last_game && game == @last_game
+        end
       end
     end
   end
