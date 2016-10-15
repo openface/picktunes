@@ -91,6 +91,7 @@ get '/scoreboard/?' do
 
   games = Game.order(Sequel.desc(:score)).to_hash_groups(:genre)
   scores = {}
+  @averages = {}
   games.each do |genre,games|
     scores[genre] = []
     games.each do |game|
@@ -99,6 +100,8 @@ get '/scoreboard/?' do
         @highscore = true if @last_game && game == @last_game && scores[genre].size <= 10
       end
     end
+
+    @averages[genre] = (games.inject(0.0) { |sum, g| sum + g[:score] }.to_f / games.size).to_i
   end
 
   @grouped_games = scores

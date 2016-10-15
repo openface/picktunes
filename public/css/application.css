@@ -42,6 +42,10 @@ tr.last_game {
 	border-radius:5px;
 	border:1px solid #999;
 }
+.scorecard h5 .stats {
+	font-size:16px;
+	margin-left:20px;
+}
 .scorecard table td, .scorecard table th {
 	padding:0 1px;
 }
