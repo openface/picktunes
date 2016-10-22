@@ -36,8 +36,9 @@ var Game = (function() {
         $('#round').html(round);
 
         var audio = new Audio(selectedSong['audio']);
+        audio.play();
+
         audio.onloadeddata = function() {
-          audio.play();
           counterPaused = false;
         };
 
