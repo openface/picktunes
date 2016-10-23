@@ -31,7 +31,7 @@
     <div class="col s12">
       <div class="scores">
         <% @grouped_games.each do |genre,games| %>
-          <div class="scorecard">
+          <div class="scorecard <%=@colors.next%> lighten-4">
             <h5><strong><%=settings.genres[genre]%></strong> <span class="stats" title="Average score of <%=@averages[genre]%> points out of <%=@totals[genre]%> total games played in this genre">avg score: <%=@averages[genre]%></span></h5>
             <table>
               <thead>

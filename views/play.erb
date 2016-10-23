@@ -38,6 +38,7 @@
 
 <script id="pleaseWaitTemplate" type="text/x-jquery-tmpl">
   <div class="center-align">
+    <p class="flow-text">Please Wait...</p>
     <div class="progress">
       <div class="indeterminate"></div>
     </div>
@@ -57,21 +58,24 @@
 </script>
 
 <script>
+$("#content").html($("#pleaseWaitTemplate").tmpl());
 $(document).on(
 	'fbload',
 	function() {
-		Game.setSongs(<%=@songs.to_json%>);
+		$.get( "/songs.json", function(data) {
+                    Game.setSongs(data);
 
-		if (isMobile.any()) {
-			$("#content").html($("#mobileTemplate").tmpl());
-			$("#startMusic").click(function() {
-				$("#content").html($("#gameTemplate").tmpl())
-				Game.startRound();
-			});
-		} else {
-			$("#content").html($("#gameTemplate").tmpl());
-			Game.startRound();
-		}
+                    if (isMobile.any()) {
+                            $("#content").html($("#mobileTemplate").tmpl());
+                            $("#startMusic").click(function() {
+                                    $("#content").html($("#gameTemplate").tmpl())
+                                    Game.startRound();
+                            });
+                    } else {
+                            $("#content").html($("#gameTemplate").tmpl());
+                            Game.startRound();
+                    }
+		});
 	}
 );
 </script>

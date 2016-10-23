@@ -23,6 +23,9 @@ configure do
     15 => "Soul",
     16 => "Soundtrack"
   }
+
+  # colors for the scoreboard
+  set :available_colors, %w(red pink purple deep-purple indigo blue light-blue cyan teal green light-green lime yellow amber orange deep-orange brown grey blue-grey)
 end
 
 #
@@ -59,7 +62,10 @@ end
 
 get '/play/?' do
   redirect to('/') unless session[:user] && session[:genre]
+  erb :play
+end
 
+get '/songs.json/?' do
   url = "https://itunes.apple.com/us/rss/topsongs/limit=200/genre=#{session[:genre]}/xml"
 
   doc = Nokogiri::HTML(open(url))
@@ -74,8 +80,7 @@ get '/play/?' do
     }
   end
   @songs = songs.sample(40).shuffle
-
-  erb :play
+  json @songs
 end
 
 post '/endgame/?' do
@@ -87,6 +92,8 @@ post '/endgame/?' do
 end
 
 get '/scoreboard/?' do
+  @colors = settings.available_colors.sample(settings.genres.size).cycle  
+
   @last_game = Game.find(id: params[:last_game_id]) if params[:last_game_id]
 
   games = Game.order(Sequel.desc(:score)).to_hash_groups(:genre)
