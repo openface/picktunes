@@ -10,37 +10,22 @@ li.song:hover {
 	align-items: flex-start;
 	justify-content:center;
 }
-.scorecard {
-	flex: 1 1 250px;
-	text-align:center;
-	margin:0 10px;
-	min-width:250px;
-	padding:5px;
-	margin-bottom:10px;
-	border-radius:5px;
-	border:1px solid #000;
+.scores .card {
+	margin:4px;
 }
-.scorecard table {
-}
-.scorecard table td {
-	background-color:#fff;
-}
-.scorecard h5 .stats {
-	font-size:16px;
-	margin-left:20px;
-}
-.scorecard table td, .scorecard table th {
-	padding:0 2px;
+.scores h5 .stats {
+	font-size:14px;
 }
 #counter {
-	font-size:55px;
+	font-size:24px;
+	font-weight:bold;
 }
 .nearzero {
 	color: red;
 }
 #round {
-	font-size:64px;
+	font-size:32px;
 }
 #score {
-	font-size:64px;
+	font-size:32px;
 }

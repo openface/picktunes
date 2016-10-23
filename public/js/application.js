@@ -67,7 +67,7 @@ var Game = (function() {
             clearInterval(countdown);
 
             score = score + counter;
-            Materialize.toast(counter + ' points!', 3000);
+            Materialize.toast('+ ' + counter + ' points!', 3000);
             $('#score').html(score);
             console.log("We have a winner!");
             new Audio("/sounds/right.mp3").play();
