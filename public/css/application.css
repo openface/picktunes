@@ -1,28 +1,6 @@
-.song a {
-	display:block;
-	background-color:#f9f9f9;
-	text-decoration:none;
+li.song:hover {
 	cursor:pointer;
-	margin-bottom:3px;
-	border-radius:5px;
-	border:1px solid #ccc;
-	color:#000;
 }
-.song a:active {
-	background:#5bc0de;
-	color:#fff;
-}
-.song img {
-	float:left;
-	margin:10px;
-	border:2px solid #fff;
-}
-.song h5 {
-	padding-top:10px;
-	margin-bottom:0;
-	font-weight:bold;
-}
-
 tr.last_game {
 	background:#ffff99;
 }
@@ -60,8 +38,4 @@ tr.last_game {
 }
 #score {
 	font-size:64px;
-}
-.green {
-	color: #00b400;
-	font-weight: bold;
 }

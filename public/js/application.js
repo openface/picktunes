@@ -42,9 +42,10 @@ var Game = (function() {
           counterPaused = false;
         };
 
-        $("#songsList").hide().html($("#songsTemplate").tmpl(roundSongs)).fadeIn('slow');
+        $("#songsList").html($("#songsTemplate").tmpl(roundSongs));
+        Materialize.showStaggeredList('#songsList');
 
-        $('.song a').click(function() {
+        $('li.song').click(function() {
             if ($(this).data('id') == selectedSong['id']) {
                 /* correct answer */
                 selectedRightSong();

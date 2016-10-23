@@ -1,33 +1,39 @@
-<div class="container">
-  <div class="row">
-    <div class="twelve columns" style="margin-top: 10%">
-      <% if @last_game %>
-        <div style="text-align:center;margin-bottom:50px;">
-          <h2>Game Over. You scored <strong><%=@last_game.score%></strong> <%=settings.genres[@last_game.genre].downcase%> points.</h2>
+<div class="container" style="margin-top:5%">
+  <% if @last_game %>
+    <div class="row">
+      <div class="col s12">
+        <div style="margin-bottom:50px;" class="center-align">
+          <h3>Game Over. You scored <strong><%=@last_game.score%></strong> <%=settings.genres[@last_game.genre].downcase%> points.</h3>
 
 	  <% if @highscore %>
-		<h3 class="green">You made the top 10 list!</h3>
+		<div class="card-panel yellow accent-3">You made the top 10 list!</div>
 	  <% end %>
 
-	  <p>
+	  <p class="flow-text">
 		<a href="javascript:shareScoreToFacebook('I scored <%=@last_game.score%> <%=settings.genres[@last_game.genre].downcase%> points on picktun.es!');">Share your score on Facebook</a>
 	  </p>
 
         </div>
-      <% end %>
-
-      <div class="u-pull-left">
+      </div>
+    </div>
+  <% end %>
+  <div class="row">
+    <div class="col s12">
+      <div class="left">
         <h4>Top Players</h4>
       </div>
-      <div class="u-pull-right">
-        <a class="button button-primary" href="/">Play Again</a>
+      <div class="right">
+	<a class="waves-effect waves-light btn" href="/">Play Again</a>
       </div>
-      <br class="u-cf" />
+    </div>
+  </div>
+  <div class="row">
+    <div class="col s12">
       <div class="scores">
         <% @grouped_games.each do |genre,games| %>
           <div class="scorecard">
             <h5><strong><%=settings.genres[genre]%></strong> <span class="stats" title="Average score of <%=@averages[genre]%> points out of <%=@totals[genre]%> total games played in this genre">avg score: <%=@averages[genre]%></span></h5>
-            <table class="u-full-width">
+            <table class="striped">
               <thead>
                 <tr>
                   <th>#</th>
