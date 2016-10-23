@@ -79,7 +79,7 @@ get '/songs.json/?' do
       :audio => entry.at_xpath(".//link[@rel='enclosure']")['href']
     }
   end
-  @songs = songs.sample(40).shuffle
+  @songs = songs.sample(40)
   json @songs
 end
 

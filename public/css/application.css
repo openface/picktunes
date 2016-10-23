@@ -1,6 +1,9 @@
 li.song:hover {
 	cursor:pointer;
 }
+.collection .collection-item.avatar {
+	min-height:100%;
+}
 .scores {
 	display:flex;
 	flex-wrap:wrap;
