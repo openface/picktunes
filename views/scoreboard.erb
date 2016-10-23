@@ -6,7 +6,7 @@
           <h3>Game Over. You scored <strong><%=@last_game.score%></strong> <%=settings.genres[@last_game.genre].downcase%> points.</h3>
 
 	  <% if @highscore %>
-		<div class="card-panel yellow accent-3">You made the top 10 list!</div>
+		<div class="card-panel yellow lighten-3">You made the top 10 list!</div>
 	  <% end %>
 
 	  <p class="flow-text">
@@ -33,7 +33,7 @@
         <% @grouped_games.each do |genre,games| %>
           <div class="scorecard">
             <h5><strong><%=settings.genres[genre]%></strong> <span class="stats" title="Average score of <%=@averages[genre]%> points out of <%=@totals[genre]%> total games played in this genre">avg score: <%=@averages[genre]%></span></h5>
-            <table class="striped">
+            <table>
               <thead>
                 <tr>
                   <th>#</th>
@@ -44,7 +44,7 @@
               </thead>
               <tbody>
                 <% games.slice(0,10).each_with_index do |game,index| %>
-                  <tr class="<%=params[:last_game_id]==game.id.to_s ? 'last_game' : ''%>">
+                  <tr class="<%=params[:last_game_id]==game.id.to_s ? 'yellow lighten-3' : ''%>">
                     <td><strong><%=index + 1%></strong></td>
                     <td><%=game[:username]%></td>
                     <td style="text-align:center;"><strong><%=game[:score]%></strong></td>

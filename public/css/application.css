@@ -1,9 +1,6 @@
 li.song:hover {
 	cursor:pointer;
 }
-tr.last_game {
-	background:#ffff99;
-}
 .scores {
 	display:flex;
 	flex-wrap:wrap;
