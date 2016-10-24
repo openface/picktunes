@@ -91,6 +91,14 @@ post '/endgame/?' do
   json :last_game_id => game.id
 end
 
+get '/scores/:genre/?' do
+  halt unless request.xhr?
+
+  @genre = settings.genres[params[:genre].to_i]
+  @games = Game.where('genre = ?', params[:genre]).order(Sequel.desc(:score))
+  erb :scores
+end
+
 get '/scoreboard/?' do
   @colors = settings.available_colors.sample(settings.genres.size).cycle  
 

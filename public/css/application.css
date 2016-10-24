@@ -10,7 +10,7 @@ li.song:hover {
 	align-items: flex-start;
 	justify-content:center;
 }
-.scores .card {
+.scores .card-panel {
 	margin:4px;
 }
 .scores h5 .stats {
