@@ -5,10 +5,6 @@
         <div class="col s12 center-align">
             <h3>Game Over. You scored <strong><%=@last_game.score%></strong> <%=settings.genres[@last_game.genre].downcase%> points.</h3>
 
-            <% if @highscore %>
-                  <p class="flow-text">You made the top 10 list!</p>
-            <% end %>
-
             <p class="flow-text">
                   <a href="javascript:shareScoreToFacebook('I scored <%=@last_game.score%> <%=settings.genres[@last_game.genre].downcase%> points on picktun.es!');">Share your score on Facebook</a>
             </p>
@@ -31,52 +27,47 @@
   </div>
   <div class="row">
     <div class="col s12">
-      <div class="scores">
-        <% @grouped_games.each do |genre,games| %>
-          <div class="card-panel hoverable <%=@colors.next%> lighten-4" data-id="<%=genre%>">
-            <h5>
-                  <strong><%=settings.genres[genre]%></strong> 
-                  <span class="stats right" title="Average score of <%=@averages[genre]%> points out of <%=@totals[genre]%> total games played in this genre">avg score: <%=@averages[genre]%></span>
-            </h5>
-            <table>
-              <thead>
-                <tr>
-                  <th>#</th>
-                  <th>NAME</th>
-                  <th>SCORE</th>
-                  <th>DATE</th>
-                </tr>
-              </thead>
-              <tbody>
-                <% games.slice(0,10).each_with_index do |game,index| %>
-                  <tr class="<%=params[:last_game_id]==game.id.to_s ? 'yellow lighten-3' : ''%>">
-                    <td><strong><%=index + 1%></strong></td>
-                    <td><%=game[:username]%></td>
-                    <td style="text-align:center;"><strong><%=game[:score]%></strong></td>
-                    <td><%=game[:created_at].strftime("%m/%d/%Y")%></td>
-                  </tr>
-                <% end %>
-              </tbody>
-            </table>
-          </div>
-        <% end %>
-      </div>
-
+      <div class="scores" id="scoresList"></div>
     </div>
   </div>
 </div>
 
-<div id="scores_modal" class="modal modal-fixed-footer">
-  <div class="modal-content"></div>
-</div>
+<script id="scoresListTemplate" type="text/x-jquery-tmpl">
+  {{each(genre,games) scores}}
+    <div class="card-panel lighten-4">
+      <h5><strong>${genre}</strong></h5>
+      <table>
+        <thead>
+          <tr>
+            <th>#</th>
+            <th>NAME</th>
+            <th>SCORE</th>
+            <th>DATE</th>
+          </tr>
+        </thead>
+        <tbody>
+          {{each games}}
+            <tr class="${last_game_id == id ? 'yellow lighten-4' : ''}">
+              <td><strong>${index}</strong></td>
+              <td>${username}</td>
+              <td style="text-align:center;"><strong>${score}</strong></td>
+              <td>${created_at}</td>
+            </tr>
+          {{/each}}
+        </tbody>
+      </table>
+    </div>
+  {{/each}}
+</script>
+
 
 <script>
 $(document).ready(function() {
-	$('.card-panel').click(function() {
-		$.get("/scores/" + $(this).data('id'), function(data) {
-			$('#scores_modal .modal-content').html(data);
-			$('#scores_modal').openModal();			
-		});
+	$.get("/scores.json", function(data) {
+		$("#scoresList").html($("#scoresListTemplate").tmpl({
+			scores: data,
+			last_game_id: <%=@last_game ? @last_game.id : 'null'%>
+		}));
 	});
 });
 </script>

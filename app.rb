@@ -62,10 +62,13 @@ end
 
 get '/play/?' do
   redirect to('/') unless session[:user] && session[:genre]
+
   erb :play
 end
 
 get '/songs.json/?' do
+  halt unless request.xhr?
+
   url = "https://itunes.apple.com/us/rss/topsongs/limit=200/genre=#{session[:genre]}/xml"
 
   doc = Nokogiri::HTML(open(url))
@@ -79,8 +82,7 @@ get '/songs.json/?' do
       :audio => entry.at_xpath(".//link[@rel='enclosure']")['href']
     }
   end
-  @songs = songs.sample(40)
-  json @songs
+  json songs.sample(40)
 end
 
 post '/endgame/?' do
@@ -91,37 +93,35 @@ post '/endgame/?' do
   json :last_game_id => game.id
 end
 
-get '/scores/:genre/?' do
+get '/scores.json/?' do
   halt unless request.xhr?
-
-  @genre = settings.genres[params[:genre].to_i]
-  @games = Game.where('genre = ?', params[:genre]).order(Sequel.desc(:score))
-  erb :scores
-end
-
-get '/scoreboard/?' do
-  @colors = settings.available_colors.sample(settings.genres.size).cycle  
-
-  @last_game = Game.find(id: params[:last_game_id]) if params[:last_game_id]
 
   games = Game.order(Sequel.desc(:score)).to_hash_groups(:genre)
   scores = {}
-  @averages = {}
-  @totals = {}
-  games.each do |genre,games|
+  games.each do |_genre,games|
+    genre = settings.genres[_genre]
     scores[genre] = []
-    games.each do |g|
-      unless scores[genre].find { |s| s.username == g.username }
-        scores[genre] << g
-        @highscore = true if @last_game && g == @last_game && scores[genre].size <= 10
+    i = 0
+    games.each do |_game|
+      unless scores[genre].find { |s| s['username'] == _game.username }
+        i = i + 1
+        scores[genre] << {
+          'username' => _game.username,
+          'score' => _game.score,
+          'created_at' => _game.created_at.strftime("%m/%d/%Y"),
+          'id' => _game.id,
+          'index' => i
+        }
       end
     end
-
-    @averages[genre] = (games.inject(0.0) { |sum, g| sum + g[:score] }.to_f / games.size).to_i
-    @totals[genre] = games.size
   end
 
-  @grouped_games = scores
+  json scores
+end
+
+get '/scoreboard/?' do
+  @last_game = Game.find(id: params[:last_game_id]) if params[:last_game_id]
+
   erb :scoreboard
 end
 

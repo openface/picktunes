@@ -10,12 +10,6 @@ li.song:hover {
 	align-items: flex-start;
 	justify-content:center;
 }
-.scores .card-panel {
-	margin:4px;
-}
-.scores h5 .stats {
-	font-size:14px;
-}
 #counter {
 	font-size:24px;
 	font-weight:bold;
