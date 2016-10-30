@@ -1,5 +1,5 @@
 <% if @last_game %>
-  <div class="row <%=settings.available_colors.sample(1).first%> lighten-5 z-depth-1">
+  <div class="row random_color lighten-5 z-depth-1">
     <div class="container">
       <div class="row">
         <div class="col s12 center-align">
@@ -34,7 +34,7 @@
 
 <script id="scoresListTemplate" type="text/x-jquery-tmpl">
   {{each(genre,games) scores}}
-    <div class="card-panel lighten-4">
+    <div class="card-panel random_color lighten-4">
       <h5><strong>${genre}</strong></h5>
       <table>
         <thead>
@@ -47,7 +47,7 @@
         </thead>
         <tbody>
           {{each games}}
-            <tr class="${last_game_id == id ? 'yellow lighten-4' : ''}">
+            <tr class="${last_game_id == id ? 'yellow lighten-5' : ''}">
               <td><strong>${index}</strong></td>
               <td>${username}</td>
               <td style="text-align:center;"><strong>${score}</strong></td>
@@ -68,6 +68,9 @@ $(document).ready(function() {
 			scores: data,
 			last_game_id: <%=@last_game ? @last_game.id : 'null'%>
 		}));
+		$('.random_color').each(function() {
+			$(this).addClass(Colors.getRandom());
+		});
 	});
 });
 </script>

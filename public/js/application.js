@@ -1,3 +1,22 @@
+
+//
+//
+//
+var Colors = (function() {
+  var available_colors = ["red", "pink", "purple", "deep-purple", "indigo", "blue", "light-blue", "cyan", "teal", "green", "light-green", "lime", "yellow", "amber", "orange", "deep-orange", "brown", "grey", "blue-grey"];
+
+  var getRandom = function() {
+    return available_colors[Math.floor(Math.random() * available_colors.length)];
+  }
+  
+  return {
+    getRandom: getRandom
+  }
+})();
+
+//
+//
+//
 var Game = (function() {
     var songs;
     var counter;
@@ -124,6 +143,9 @@ var Game = (function() {
  
 })();
 
+//
+//
+//
 function shareScoreToFacebook(message) {
     FB.ui({
       method: 'feed',
