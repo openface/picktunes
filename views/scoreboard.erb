@@ -1,13 +1,11 @@
 <% if @last_game %>
-  <div class="row random_color lighten-5 z-depth-1">
+  <div class="row random_color lighten-5 z-depth-2 valign-wrapper" style="height:200px;">
     <div class="container">
       <div class="row">
         <div class="col s12 center-align">
             <h3>Game Over. You scored <strong><%=@last_game.score%></strong> <%=settings.genres[@last_game.genre].downcase%> points.</h3>
 
-            <p class="flow-text">
-                  <a href="javascript:shareScoreToFacebook('I scored <%=@last_game.score%> <%=settings.genres[@last_game.genre].downcase%> points on picktun.es!');">Share your score on Facebook</a>
-            </p>
+            <a href="javascript:shareScoreToFacebook('I scored <%=@last_game.score%> <%=settings.genres[@last_game.genre].downcase%> points on picktun.es!');">Share your score on Facebook</a>
         </div>
       </div>
     </div>
