@@ -111,7 +111,7 @@ get '/scores.json/?' do
           'created_at' => _game.created_at.strftime("%m/%d/%Y"),
           'id' => _game.id,
           'index' => i
-        }
+        } if i <= 10
       end
     end
   end
