@@ -1,4 +1,4 @@
-<div class="container" style="margin-top:10%">
+<div class="container" style="margin-top:5%">
   <div class="row">
     <div class="col l12 s12 center-align">
       <img src="/images/note-64.png" />
@@ -6,8 +6,10 @@
       <p class="flow-text">Play "Name That Tune" with strangers in a highly competitive music guessing game.</p>
     </div>
   </div>
-  <div class="row">
-	<form method="post" class="col l12 m12 s12 card-panel">
+</div>
+  <div class="row <%=settings.available_colors.sample(1).first%> lighten-5 valign-wrapper z-depth-1" style="height:200px">
+    <div class="container valign">
+	<form method="post" class="col l12 m12 s12">
 		<div class="row">
 			<div class="input-field col l4 s12 m6">
 				<input size="30" type="text" class="validate" maxlength="20" name="user" value="<%=session[:user]%>" required autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" />
@@ -26,7 +28,9 @@
 			</div>
 		</div>
 	</form>
-  </div>
+    </div>
+</div>
+<div class="container">
   <div class="row">
     <div class="col s12 center-align">
       <p class="flow-text"><a href="/scoreboard">See the scoreboard.</a></p>

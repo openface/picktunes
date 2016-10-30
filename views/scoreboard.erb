@@ -1,22 +1,24 @@
-<div class="container" style="margin-top:5%">
-  <% if @last_game %>
-    <div class="row">
-      <div class="col s12">
-        <div style="margin-bottom:50px;" class="center-align">
-          <h3>Game Over. You scored <strong><%=@last_game.score%></strong> <%=settings.genres[@last_game.genre].downcase%> points.</h3>
+<% if @last_game %>
+  <div class="row <%=settings.available_colors.sample(1).first%> lighten-5 z-depth-1">
+    <div class="container">
+      <div class="row">
+        <div class="col s12 center-align">
+            <h3>Game Over. You scored <strong><%=@last_game.score%></strong> <%=settings.genres[@last_game.genre].downcase%> points.</h3>
 
-	  <% if @highscore %>
-		<div class="card-panel yellow lighten-3">You made the top 10 list!</div>
-	  <% end %>
+            <% if @highscore %>
+                  <p class="flow-text">You made the top 10 list!</p>
+            <% end %>
 
-	  <p class="flow-text">
-		<a href="javascript:shareScoreToFacebook('I scored <%=@last_game.score%> <%=settings.genres[@last_game.genre].downcase%> points on picktun.es!');">Share your score on Facebook</a>
-	  </p>
-
+            <p class="flow-text">
+                  <a href="javascript:shareScoreToFacebook('I scored <%=@last_game.score%> <%=settings.genres[@last_game.genre].downcase%> points on picktun.es!');">Share your score on Facebook</a>
+            </p>
         </div>
       </div>
     </div>
-  <% end %>
+  </div>
+<% end %>
+
+<div class="container" style="margin-top:5%">
   <div class="row">
     <div class="col s12">
       <div class="left">
