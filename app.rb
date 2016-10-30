@@ -94,7 +94,13 @@ end
 get '/scores.json/?' do
   halt unless request.xhr?
 
-  games = Game.order(Sequel.desc(:score)).to_hash_groups(:genre)
+  games = Game.order(Sequel.desc(:score))
+
+  if params[:filter]=='last_month'
+    games = games.filter('created_at > ?', Date.today - 30)
+  end
+
+  games = games.to_hash_groups(:genre)
   scores = {}
   games.each do |_genre,games|
     genre = settings.genres[_genre]
