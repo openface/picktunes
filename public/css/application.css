@@ -4,6 +4,12 @@ li.song:hover {
 .collection .collection-item.avatar {
 	min-height:100%;
 }
+.song {
+	height:60px;
+}
+.song .artist {
+	display:none;
+}
 .scores {
 	display:flex;
 	flex-wrap:wrap;

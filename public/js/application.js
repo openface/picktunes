@@ -116,6 +116,9 @@ var Game = (function() {
                 counter--;
             }
             $('#counter').html(counter);
+            if (counter <= 10) {
+                $('.song .artist').fadeIn();
+            }
             if (counter <= 5) {
                 $('#counter').addClass('nearzero');
             }
