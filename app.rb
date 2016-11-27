@@ -21,7 +21,8 @@ configure do
     7  => "Electronic",
     14 => "Pop",
     15 => "Soul",
-    16 => "Soundtrack"
+    16 => "Soundtrack",
+    4  => "Kid Bop"
   }
 
 end
