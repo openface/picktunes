@@ -15,7 +15,7 @@
 <div class="container" style="margin-top:5%">
   <div class="row">
     <div class="col s12 m6">
-	<h5 style="margin:0;">Top Players - <span id="timeframe">All Time</span></h5>
+	<h5 style="margin:0;">Top Players - <span id="timeframe">Latest</span></h5>
     </div>
     <div class="col s12 m6 right-align">
 	<a class="waves-effect waves-light btn" href="/">Play Again</a>
@@ -24,15 +24,15 @@
   <div class="row">
     <div class="col s12">
       <ul class="tabs">
-        <li class="tab col s6"><a class="active" href="#all_time">All Time</a></li>
-        <li class="tab col s6"><a href="#last_month">Last Month</a></li>
+        <li class="tab col s6"><a class="active" href="#latest">Latest</a></li>
+        <li class="tab col s6"><a href="#all_time">All Time</a></li>
       </ul>
     </div>
   </div>
   <div class="row">
     <div class="col s12">
+      <div class="scores" id="latest"></div>
       <div class="scores" id="all_time"></div>
-      <div class="scores" id="last_month"></div>
     </div>
   </div>
 </div>
@@ -68,8 +68,9 @@
 
 <script>
 $(document).ready(function() {
-	$.get("/scores.json", function(data) {
-		$("#all_time").html($("#scoresListTemplate").tmpl({
+
+	$.get("/scores.json?filter=latest", function(data) {
+		$("#latest").html($("#scoresListTemplate").tmpl({
 			scores: data,
 			last_game_id: <%=@last_game ? @last_game.id : 'null'%>
 		}));
@@ -79,8 +80,8 @@ $(document).ready(function() {
 		});
 	});
 
-	$.get("/scores.json?filter=last_month", function(data) {
-		$("#last_month").html($("#scoresListTemplate").tmpl({
+	$.get("/scores.json?filter=all_time", function(data) {
+		$("#all_time").html($("#scoresListTemplate").tmpl({
 			scores: data,
 			last_game_id: <%=@last_game ? @last_game.id : 'null'%>
 		}));
@@ -92,10 +93,10 @@ $(document).ready(function() {
 
 	$('ul.tabs').tabs({
 		onShow: function(el) {
-			if (el.attr('id')=='last_month') {
-				$('#timeframe').html('Last Month');
-			} else {
+			if (el.attr('id')=='all_time') {
 				$('#timeframe').html('All Time');
+			} else {
+				$('#timeframe').html('Latest');
 			}
 			Materialize.fadeInImage(el);
 		}

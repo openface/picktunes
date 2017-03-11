@@ -98,7 +98,8 @@ get '/scores.json/?' do
 
   games = Game.order(Sequel.desc(:score))
 
-  if params[:filter]=='last_month'
+  if params[:filter]=='all_time'
+  elsif params[:filter]=='latest'
     games = games.filter('created_at > ?', Date.today - 30)
   end
 
