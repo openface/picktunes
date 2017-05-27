@@ -66,11 +66,11 @@ var Game = (function() {
 
         $('li.song').click(function() {
             if ($(this).data('id') == selectedSong['id']) {
-                /* correct answer */
-                selectedRightSong();
+                // correct answer
+                selectSong(true);
             } else {
-                /* wrong answer */
-                selectedWrongSong();
+                // wrong answer
+                selectSong(false);
             }
 
             if(isMobile.any()) {
@@ -80,35 +80,31 @@ var Game = (function() {
             }
         });
 
-        var selectedRightSong = function() {
-            audio.pause();
-            audio.currentTime = 0;
-            clearInterval(countdown);
+        var selectSong = function(correct) {
+          audio.pause();
+          audio.currentTime = 0;
+          clearInterval(countdown);
 
+          if (correct) {
+            // right answer
             score = score + counter;
             Materialize.toast('+ ' + counter + ' points!', 3000);
             $('#score').html(score);
             console.log("We have a winner!");
             new Audio("/sounds/right.mp3").play();
             FB.AppEvents.logEvent("selectedRightAnswer");
-
             if (!isMobile.any()) {
-                $("#songsList").html($("#rightAnswerTemplate").tmpl());
+              $("#songsList").html($("#rightAnswerTemplate").tmpl());
             }
-        };
-        
-        var selectedWrongSong = function() {
-            audio.pause();
-            audio.currentTime = 0;
-            clearInterval(countdown);
-                
-            console.log("Wrong answer!");                
+          } else {
+            // wrong answer
+            console.log("Wrong answer!");
             new Audio("/sounds/wrong.mp3").play();
             FB.AppEvents.logEvent("selectedWrongAnswer");
-
             if (!isMobile.any()) {
-                $("#songsList").html($("#wrongAnswerTemplate").tmpl());
+              $("#songsList").html($("#wrongAnswerTemplate").tmpl());
             }
+          }
         };
 
         var countdown = setInterval(function() {
