@@ -52,10 +52,11 @@ get '/' do
 end
 
 post '/' do
-  redirect to('/') unless !params[:user].empty? && params[:genre]
+  name = Rack::Utils.escape_html(params[:user]).strip
+  redirect to('/') if name.empty? || !params[:genre]
 
   session.clear
-  session[:user] = Rack::Utils.escape_html(params[:user])
+  session[:user] = name
   session[:genre] = params[:genre]
   redirect to('/play')
 end
