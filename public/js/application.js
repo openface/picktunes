@@ -121,7 +121,7 @@ var Game = (function() {
             if (counter == 0) {
                 console.log("Times up!");
 
-                selectedWrongSong();
+                selectSong(false);
                                
                 FB.AppEvents.logEvent("roundTimedOut");
 
