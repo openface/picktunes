@@ -8,7 +8,7 @@ require 'open-uri'
 # Config
 
 configure do
-  enable :sessions
+  enable :sessions, :expire_after => 2592000
   set :database, ENV['DATABASE_URL'] || 'mysql://root@localhost/PICKTUNE'
 
   # https://affiliate.itunes.apple.com/resources/documentation/genre-mapping/
