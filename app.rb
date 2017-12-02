@@ -116,7 +116,7 @@ get '/scores.json/?' do
       unless scores[genre].find { |s| s['username'] == _game.username }
         i = i + 1
         scores[genre] << {
-          'username' => _game.username.encode('UTF-8', invalid: :replace, undef: :replace, replace: '?'),
+          'username' => _game.username.to_s.encode('UTF-8', invalid: :replace, undef: :replace, replace: '?'),
           'score' => _game.score,
           'created_at' => _game.created_at.strftime("%m/%d/%Y"),
           'id' => _game.id,
