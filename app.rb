@@ -103,7 +103,7 @@ get '/scores.json/?' do
 
   if params[:filter]=='all_time'
   elsif params[:filter]=='latest'
-    games = games.filter('created_at > ?', Date.today - 30)
+    games = games.filter('created_at > ?', Date.today - 90) # last 90 days
   end
 
   games = games.to_hash_groups(:genre)
