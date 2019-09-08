@@ -11,7 +11,7 @@ configure do
   enable :sessions
   set :sessions, :expire_after => 2592000
 
-  set :database, ENV['DATABASE_URL'] || 'mysql://root@localhost/PICKTUNE'
+  set :database, ENV['DATABASE_URL'] || 'mysql2://root@localhost/PICKTUNE'
 
   # https://affiliate.itunes.apple.com/resources/documentation/genre-mapping/
   set :genres, {
