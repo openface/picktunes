@@ -3,6 +3,7 @@ Bundler.require(:default)
 require "sinatra/reloader" if development?
 require 'json'
 require 'open-uri'
+require 'tilt/erb'
 
 #
 # Config

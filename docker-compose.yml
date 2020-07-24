@@ -1,0 +1,25 @@
+version: '3.3'
+
+services:
+   db:
+     image: mysql:8.0.21
+     volumes:
+       - db_data:/var/lib/mysql
+     restart: always
+     environment:
+       MYSQL_ROOT_PASSWORD: picktunes
+       MYSQL_DATABASE: PICKTUNES
+   picktunes:
+     build: 
+       context: .
+     image: picktunes:latest
+     container_name: picktunes
+     depends_on:
+       - db
+     ports:
+       - "4567:4567"
+     restart: always
+     environment:
+       DATABASE_URL: mysql2://root:picktunes@db/PICKTUNES
+volumes:
+    db_data: {}
