@@ -73,17 +73,16 @@ end
 get '/songs.json/?' do
   halt unless request.xhr?
 
-  url = "https://itunes.apple.com/us/rss/topsongs/limit=200/genre=#{session[:genre]}/xml"
-
-  doc = Nokogiri::HTML(open(url))
+  response_body = URI.open("https://itunes.apple.com/us/rss/topsongs/limit=200/genre=#{session[:genre]}/json")
+  json_data = JSON.load(response_body)
   songs = []
-  doc.xpath('//feed/entry').each do |entry|
+  json_data['feed']['entry'].each do |entry|
     songs << {
-      :id => entry.at_xpath(".//id")['im:id'],
-      :artist => entry.at_xpath(".//artist").text,
-      :name => entry.at_xpath(".//name").text,
-      :image => entry.at_xpath(".//image[@height='55']").text,
-      :audio => entry.at_xpath(".//link[@rel='enclosure']")['href']
+      :id => entry['id']['attributes']['im:id'],
+      :artist => entry['im:artist']['label'],
+      :name => entry['im:name']['label'],
+      :image => entry['im:image'].first['label'],
+      :audio => entry['link'].last['attributes']['href']
     }
   end
   json songs.sample(40)
