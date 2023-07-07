@@ -1,4 +1,4 @@
-FROM ruby:2.5.5
+FROM ruby:2.7.4
 
 RUN apt-get update -qq && apt-get install -y build-essential
 
@@ -7,7 +7,7 @@ RUN mkdir $APP_HOME
 WORKDIR $APP_HOME
 
 ADD Gemfile* $APP_HOME/
-RUN gem install bundler -v 2.0.2 && bundle install --without development test
+RUN gem install bundler -v 2.1.4 && bundle install
 
 ADD . $APP_HOME
 
