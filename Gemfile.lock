@@ -1,12 +1,17 @@
 GEM
   remote: https://rubygems.org/
   specs:
+    date (3.3.4)
     json (2.6.3)
     multi_json (1.15.0)
     mustermann (3.0.0)
       ruby2_keywords (~> 0.0.1)
     mysql2 (0.5.5)
-    rack (2.2.7)
+    open-uri (0.4.1)
+      stringio
+      time
+      uri
+    rack (2.2.8.1)
     rack-protection (3.0.6)
       rack
     ruby2_keywords (0.0.5)
@@ -25,14 +30,19 @@ GEM
     sinatra-sequel (0.9.0)
       sequel (>= 3.2.0)
       sinatra (>= 0.9.4)
+    stringio (3.1.0)
     tilt (2.2.0)
+    time (0.3.0)
+      date
+    uri (0.13.0)
 
 PLATFORMS
-  ruby
+  x86_64-linux
 
 DEPENDENCIES
   json
   mysql2
+  open-uri
   sequel
   sinatra
   sinatra-contrib
