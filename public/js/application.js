@@ -120,6 +120,11 @@ var Game = (function() {
                 counter--;
             }
             $('#counter').html(counter);
+            
+            // Rotate clock hand - 360 degrees over 20 seconds (18 degrees per second)
+            var rotation = 360 - ((counter / 20) * 360);
+            $('#clockHand').css('transform', 'translate(-50%, -100%) rotate(' + rotation + 'deg)');
+            
             if (counter <= 10) {
                 $('.song-artist').fadeIn();
             }

@@ -567,28 +567,112 @@
 	margin: 30px 0;
 }
 
-.timer-circle {
-	width: 120px;
-	height: 120px;
+.timer-clock {
+	position: relative;
+	width: 180px;
+	height: 180px;
 	margin: 0 auto 15px;
+}
+
+.clock-face {
+	position: relative;
+	width: 180px;
+	height: 180px;
 	border-radius: 50%;
 	background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-	display: flex;
-	align-items: center;
-	justify-content: center;
-	box-shadow: 0 8px 20px rgba(102, 126, 234, 0.4);
-	transition: transform 0.3s ease;
+	box-shadow: 0 8px 20px rgba(102, 126, 234, 0.4),
+	            inset 0 2px 8px rgba(255,255,255,0.3);
+	border: 6px solid rgba(255,255,255,0.9);
+}
+
+.clock-center {
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+	width: 16px;
+	height: 16px;
+	background: white;
+	border-radius: 50%;
+	z-index: 10;
+	box-shadow: 0 2px 4px rgba(0,0,0,0.3);
+}
+
+.clock-hand {
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	width: 4px;
+	height: 60px;
+	background: white;
+	border-radius: 4px 4px 0 0;
+	transform-origin: bottom center;
+	transform: translate(-50%, -100%) rotate(0deg);
+	box-shadow: 0 2px 6px rgba(0,0,0,0.4);
+	transition: transform 1s linear;
+	z-index: 5;
+}
+
+.clock-markers {
+	position: relative;
+	width: 100%;
+	height: 100%;
+}
+
+.marker {
+	position: absolute;
+	width: 3px;
+	height: 12px;
+	background: rgba(255,255,255,0.8);
+	border-radius: 2px;
+}
+
+.marker-12 {
+	top: 8px;
+	left: 50%;
+	transform: translateX(-50%);
+}
+
+.marker-3 {
+	right: 8px;
+	top: 50%;
+	transform: translateY(-50%) rotate(90deg);
+}
+
+.marker-6 {
+	bottom: 8px;
+	left: 50%;
+	transform: translateX(-50%);
+}
+
+.marker-9 {
+	left: 8px;
+	top: 50%;
+	transform: translateY(-50%) rotate(90deg);
+}
+
+.timer-display {
+	position: absolute;
+	top: 65%;
+	left: 50%;
+	transform: translateX(-50%);
+	z-index: 15;
 }
 
 .timer-value {
 	color: white;
-	font-size: 3rem;
+	font-size: 2rem;
 	font-weight: bold;
-	text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+	text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+	background: rgba(0,0,0,0.2);
+	padding: 2px 12px;
+	border-radius: 15px;
+	display: inline-block;
 }
 
 .timer-value.nearzero {
 	color: #ff5252;
+	background: rgba(255,255,255,0.9);
 	animation: pulse 0.5s infinite;
 }
 
