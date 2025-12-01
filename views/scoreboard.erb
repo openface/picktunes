@@ -64,26 +64,16 @@
             <h5>${genre}</h5>
           </div>
           <div class="scoreboard-table-wrapper">
-            <table class="striped responsive-table">
-              <thead>
-                <tr>
-                  <th>#</th>
-                  <th>NAME</th>
-                  <th>SCORE</th>
-                  <th>DATE</th>
-                </tr>
-              </thead>
-              <tbody>
-                {{each games}}
-                  <tr class="${last_game_id == id ? 'highlight-row' : ''}">
-                    <td><strong>${index}</strong></td>
-                    <td>${username}</td>
-                    <td style="text-align:center;"><strong>${score}</strong></td>
-                    <td>${created_at}</td>
-                  </tr>
-                {{/each}}
-              </tbody>
-            </table>
+            <div class="score-list">
+              {{each games}}
+                <div class="score-item ${last_game_id == id ? 'highlight-row' : ''}">
+                  <span class="score-rank"><strong>${index}</strong></span>
+                  <span class="score-name">${username}</span>
+                  <span class="score-points"><strong>${score}</strong></span>
+                  <span class="score-date">${created_at}</span>
+                </div>
+              {{/each}}
+            </div>
           </div>
         </div>
       </div>
