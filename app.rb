@@ -58,6 +58,7 @@ end
 # Routes
 
 get '/' do
+  @saved_name = request.cookies['player_name'] || session[:user]
   erb :home
 end
 
@@ -68,6 +69,10 @@ post '/' do
   session.clear
   session[:user] = name
   session[:genre] = params[:genre]
+  
+  # Remember the player's name in a cookie (expires in 1 year)
+  response.set_cookie(:player_name, value: name, max_age: 31536000, path: '/')
+  
   redirect to('/play')
 end
 
