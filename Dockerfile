@@ -2,7 +2,7 @@ FROM ruby:2.7.4
 
 RUN apt-get update -qq && apt-get install -y build-essential default-mysql-client netcat-traditional
 
-ENV APP_HOME /app
+ENV APP_HOME=/app
 RUN mkdir $APP_HOME
 WORKDIR $APP_HOME
 
