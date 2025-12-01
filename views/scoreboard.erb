@@ -41,28 +41,32 @@
   <div class="row">
     {{each(genre,games) scores}}
       <div class="col s12 m6 l4">
-        <div class="card-panel random_color lighten-4">
-          <h5><strong>${genre}</strong></h5>
-          <table class="striped responsive-table">
-            <thead>
-              <tr>
-                <th>#</th>
-                <th>NAME</th>
-                <th>SCORE</th>
-                <th>DATE</th>
-              </tr>
-            </thead>
-            <tbody>
-              {{each games}}
-                <tr class="${last_game_id == id ? 'yellow lighten-5' : ''}">
-                  <td><strong>${index}</strong></td>
-                  <td>${username}</td>
-                  <td style="text-align:center;"><strong>${score}</strong></td>
-                  <td>${created_at}</td>
+        <div class="scoreboard-genre-card" data-genre="${genre}">
+          <div class="scoreboard-genre-header">
+            <h5>${genre}</h5>
+          </div>
+          <div class="scoreboard-table-wrapper">
+            <table class="striped responsive-table">
+              <thead>
+                <tr>
+                  <th>#</th>
+                  <th>NAME</th>
+                  <th>SCORE</th>
+                  <th>DATE</th>
                 </tr>
-              {{/each}}
-            </tbody>
-          </table>
+              </thead>
+              <tbody>
+                {{each games}}
+                  <tr class="${last_game_id == id ? 'highlight-row' : ''}">
+                    <td><strong>${index}</strong></td>
+                    <td>${username}</td>
+                    <td style="text-align:center;"><strong>${score}</strong></td>
+                    <td>${created_at}</td>
+                  </tr>
+                {{/each}}
+              </tbody>
+            </table>
+          </div>
         </div>
       </div>
     {{/each}}
@@ -79,10 +83,6 @@ $(document).ready(function() {
 				scores: data,
 				last_game_id: <%=@last_game ? @last_game.id : 'null'%>
 			}));
-
-			$('.random_color').each(function() {
-				$(this).addClass(Colors.getRandom());
-			});
 		})
 		.fail(function() {
 			$("#latest").html('<div class="col s12 center-align"><p class="red-text">Failed to load scores.</p></div>');
@@ -94,10 +94,6 @@ $(document).ready(function() {
 				scores: data,
 				last_game_id: <%=@last_game ? @last_game.id : 'null'%>
 			}));
-
-			$('.random_color').each(function() {
-				$(this).addClass(Colors.getRandom());
-			});
 		})
 		.fail(function() {
 			$("#all_time").html('<div class="col s12 center-align"><p class="red-text">Failed to load scores.</p></div>');

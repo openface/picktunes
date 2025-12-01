@@ -1,3 +1,183 @@
+/* Home Page Styles */
+.home-hero {
+	background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+	padding: 40px 0 60px 0;
+	margin-bottom: 40px;
+}
+
+.home-hero .title {
+	color: white;
+	margin: 20px 0 10px 0;
+	letter-spacing: -3px;
+	font-size: 4rem;
+	text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+}
+
+.home-hero .tagline {
+	color: rgba(255,255,255,0.9);
+	font-size: 1.3rem;
+	margin-bottom: 30px;
+}
+
+.genre-section {
+	padding: 20px 0 60px 0;
+}
+
+.genre-heading {
+	margin-bottom: 40px;
+	color: #424242;
+	font-weight: 300;
+}
+
+.genre-grid {
+	margin-bottom: 20px;
+}
+
+.genre-card {
+	height: 200px;
+	min-height: 200px;
+	position: relative;
+	border-radius: 8px;
+	overflow: hidden;
+	cursor: pointer;
+	box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+	transition: transform 0.3s ease, box-shadow 0.3s ease;
+	background-size: cover;
+	background-position: center;
+	background-color: #9c27b0;
+	margin-bottom: 20px;
+	display: block;
+}
+
+.genre-card:hover {
+	transform: translateY(-8px) scale(1.02);
+	box-shadow: 0 12px 20px rgba(0,0,0,0.2);
+}
+
+.genre-overlay {
+	position: absolute;
+	top: 0;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	background: linear-gradient(to bottom, rgba(0,0,0,0.3) 0%, rgba(0,0,0,0.7) 100%);
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+	transition: background 0.3s ease;
+}
+
+.genre-card:hover .genre-overlay {
+	background: linear-gradient(to bottom, rgba(0,0,0,0.4) 0%, rgba(0,0,0,0.8) 100%);
+}
+
+.genre-name {
+	color: white;
+	margin: 0 0 10px 0;
+	font-weight: 500;
+	text-align: center;
+	text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+}
+
+.genre-overlay i {
+	color: white;
+	font-size: 48px;
+	opacity: 0;
+	transform: scale(0.8);
+	transition: opacity 0.3s ease, transform 0.3s ease;
+}
+
+.genre-card:hover .genre-overlay i {
+	opacity: 1;
+	transform: scale(1);
+}
+
+/* Genre Background Gradients */
+.genre-card[data-genre-id="2"] { background: linear-gradient(135deg, #1e3c72 0%, #2a5298 50%, #7e8ba3 100%); } /* Blues */
+.genre-card[data-genre-id="11"] { background: linear-gradient(135deg, #4a148c 0%, #6a1b9a 50%, #8e24aa 100%); } /* Jazz */
+.genre-card[data-genre-id="21"] { background: linear-gradient(135deg, #b71c1c 0%, #c62828 50%, #e53935 100%); } /* Rock */
+.genre-card[data-genre-id="20"] { background: linear-gradient(135deg, #212121 0%, #424242 50%, #616161 100%); } /* Alternative */
+.genre-card[data-genre-id="6"] { background: linear-gradient(135deg, #bf360c 0%, #d84315 50%, #ff5722 100%); } /* Country */
+.genre-card[data-genre-id="7"] { background: linear-gradient(135deg, #01579b 0%, #0277bd 50%, #00acc1 100%); } /* Electronic */
+.genre-card[data-genre-id="14"] { background: linear-gradient(135deg, #c2185b 0%, #d81b60 50%, #f06292 100%); } /* Pop */
+.genre-card[data-genre-id="15"] { background: linear-gradient(135deg, #6a1b9a 0%, #8e24aa 50%, #ab47bc 100%); } /* Soul */
+.genre-card[data-genre-id="18"] { background: linear-gradient(135deg, #f57f17 0%, #f9a825 50%, #fbc02d 100%); } /* Hip Hop */
+.genre-card[data-genre-id="16"] { background: linear-gradient(135deg, #1a237e 0%, #283593 50%, #3949ab 100%); } /* Soundtrack */
+.genre-card[data-genre-id="4"] { background: linear-gradient(135deg, #ff6f00 0%, #ff8f00 50%, #ffa726 100%); } /* Kid Bop */
+.genre-card[data-genre-id="27"] { background: linear-gradient(135deg, #e91e63 0%, #ec407a 50%, #f48fb1 100%); } /* J-Pop */
+.genre-card[data-genre-id="29"] { background: linear-gradient(135deg, #d32f2f 0%, #e53935 50%, #ef5350 100%); } /* Anime */
+.genre-card[data-genre-id="19"] { background: linear-gradient(135deg, #00695c 0%, #00897b 50%, #26a69a 100%); } /* World */
+.genre-card[data-genre-id="17"] { background: linear-gradient(135deg, #ad1457 0%, #c2185b 50%, #e91e63 100%); } /* Dance */
+.genre-card[data-genre-id="10"] { background: linear-gradient(135deg, #4e342e 0%, #5d4037 50%, #6d4c41 100%); } /* Singer/Songwriter */
+.genre-card[data-genre-id="5"] { background: linear-gradient(135deg, #311b92 0%, #4527a0 50%, #512da8 100%); } /* Classical */
+.genre-card[data-genre-id="51"] { background: linear-gradient(135deg, #00bcd4 0%, #26c6da 50%, #4dd0e1 100%); } /* K-Pop */
+
+/* Scoreboard Genre Cards */
+.scoreboard-genre-card {
+	border-radius: 8px;
+	overflow: hidden;
+	box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+	margin-bottom: 20px;
+	transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.scoreboard-genre-card:hover {
+	transform: translateY(-4px);
+	box-shadow: 0 8px 12px rgba(0,0,0,0.15);
+}
+
+.scoreboard-genre-header {
+	padding: 15px 20px;
+	color: white;
+	text-align: center;
+}
+
+.scoreboard-genre-header h5 {
+	margin: 0;
+	font-weight: 500;
+	text-shadow: 1px 1px 2px rgba(0,0,0,0.3);
+}
+
+.scoreboard-table-wrapper {
+	background: white;
+	padding: 0;
+}
+
+.scoreboard-table-wrapper table {
+	margin: 0;
+}
+
+.scoreboard-table-wrapper thead {
+	background: rgba(0,0,0,0.05);
+}
+
+.highlight-row {
+	background-color: #fff9c4 !important;
+	font-weight: bold;
+}
+
+/* Genre-specific backgrounds for scoreboard */
+.scoreboard-genre-card[data-genre="Blues"] .scoreboard-genre-header { background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%); }
+.scoreboard-genre-card[data-genre="Jazz"] .scoreboard-genre-header { background: linear-gradient(135deg, #4a148c 0%, #6a1b9a 100%); }
+.scoreboard-genre-card[data-genre="Rock"] .scoreboard-genre-header { background: linear-gradient(135deg, #b71c1c 0%, #c62828 100%); }
+.scoreboard-genre-card[data-genre="Alternative"] .scoreboard-genre-header { background: linear-gradient(135deg, #212121 0%, #424242 100%); }
+.scoreboard-genre-card[data-genre="Country"] .scoreboard-genre-header { background: linear-gradient(135deg, #bf360c 0%, #d84315 100%); }
+.scoreboard-genre-card[data-genre="Electronic"] .scoreboard-genre-header { background: linear-gradient(135deg, #01579b 0%, #0277bd 100%); }
+.scoreboard-genre-card[data-genre="Pop"] .scoreboard-genre-header { background: linear-gradient(135deg, #c2185b 0%, #d81b60 100%); }
+.scoreboard-genre-card[data-genre="Soul"] .scoreboard-genre-header { background: linear-gradient(135deg, #6a1b9a 0%, #8e24aa 100%); }
+.scoreboard-genre-card[data-genre="Hip Hop/Rap"] .scoreboard-genre-header { background: linear-gradient(135deg, #f57f17 0%, #f9a825 100%); }
+.scoreboard-genre-card[data-genre="Soundtrack"] .scoreboard-genre-header { background: linear-gradient(135deg, #1a237e 0%, #283593 100%); }
+.scoreboard-genre-card[data-genre="Kid Bop"] .scoreboard-genre-header { background: linear-gradient(135deg, #ff6f00 0%, #ff8f00 100%); }
+.scoreboard-genre-card[data-genre="J-Pop"] .scoreboard-genre-header { background: linear-gradient(135deg, #e91e63 0%, #ec407a 100%); }
+.scoreboard-genre-card[data-genre="Anime"] .scoreboard-genre-header { background: linear-gradient(135deg, #d32f2f 0%, #e53935 100%); }
+.scoreboard-genre-card[data-genre="World"] .scoreboard-genre-header { background: linear-gradient(135deg, #00695c 0%, #00897b 100%); }
+.scoreboard-genre-card[data-genre="Dance"] .scoreboard-genre-header { background: linear-gradient(135deg, #ad1457 0%, #c2185b 100%); }
+.scoreboard-genre-card[data-genre="Singer/Songwriter"] .scoreboard-genre-header { background: linear-gradient(135deg, #4e342e 0%, #5d4037 100%); }
+.scoreboard-genre-card[data-genre="Classical"] .scoreboard-genre-header { background: linear-gradient(135deg, #311b92 0%, #4527a0 100%); }
+.scoreboard-genre-card[data-genre="K-Pop"] .scoreboard-genre-header { background: linear-gradient(135deg, #00bcd4 0%, #26c6da 100%); }
+
+/* Game Styles */
 li.song:hover {
 	cursor:pointer;
 }
