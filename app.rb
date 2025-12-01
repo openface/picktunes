@@ -10,9 +10,13 @@ require 'securerandom'
 # Config
 
 configure do
-  enable :sessions
-  set :session_secret, ENV['SESSION_SECRET'] || SecureRandom.hex(32)
-  set :sessions, :expire_after => 2592000
+  use Rack::Session::Cookie, 
+    key: 'picktunes.session',
+    path: '/',
+    secret: ENV['SESSION_SECRET'] || SecureRandom.hex(32),
+    expire_after: 2592000,
+    same_site: :lax,
+    http_only: true
 
   set :database, ENV['DATABASE_URL'] || 'mysql2://root@localhost/PICKTUNE'
 
@@ -68,7 +72,13 @@ post '/' do
   name = Rack::Utils.escape_html(params[:user]).strip
   genre_id = params[:genre].to_i
   
-  redirect to('/') if name.empty? || !params[:genre] || !settings.genres.key?(genre_id)
+  if name.empty? || !params[:genre] || !settings.genres.key?(genre_id)
+    if request.xhr?
+      halt 400, json(error: 'Invalid input')
+    else
+      redirect to('/')
+    end
+  end
 
   session.clear
   session[:user] = name
@@ -77,7 +87,12 @@ post '/' do
   # Remember the player's name in a cookie (expires in 1 year)
   response.set_cookie(:player_name, value: name, max_age: 31536000, path: '/')
   
-  redirect to('/play')
+  if request.xhr?
+    content_type :json
+    json success: true
+  else
+    redirect to('/play')
+  end
 end
 
 get '/play/?' do
@@ -88,7 +103,9 @@ end
 
 get '/songs.json/?' do
   halt 403 unless request.xhr?
-  halt 400, json(error: 'Session expired') unless session[:genre]
+  
+  logger.info "Session data: user=#{session[:user]}, genre=#{session[:genre]}"
+  halt 400, json(error: 'Session expired - no genre') unless session[:genre]
 
   genre = session[:genre].to_i
   halt 400, json(error: 'Invalid genre') unless settings.genres.key?(genre)

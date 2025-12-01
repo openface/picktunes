@@ -86,7 +86,12 @@ $(document).on(
 			})
 			.fail(function(xhr, status, error) {
 				console.error('Failed to load songs:', error);
-				$("#content").html('<div class="row"><div class="col s12 center-align"><p class="flow-text red-text">Failed to load songs. Please refresh the page.</p></div></div>');
+				console.error('Response:', xhr.responseJSON);
+				var errorMsg = 'Failed to load songs. Please refresh the page.';
+				if (xhr.responseJSON && xhr.responseJSON.error) {
+					errorMsg = xhr.responseJSON.error;
+				}
+				$("#content").html('<div class="row"><div class="col s12 center-align"><p class="flow-text red-text">' + errorMsg + '</p><a href="/" class="btn">Go Back</a></div></div>');
 			});
 	}
 );

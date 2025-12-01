@@ -32,7 +32,7 @@
     
     <div class="row genre-grid">
       <% settings.genres.each do |id, genre| %>
-        <div class="col s12 m6 l4">
+        <div class="col s6 m4 l3">
           <div class="genre-card waves-effect" data-genre-id="<%=id%>" data-genre-name="<%=genre%>">
             <div class="genre-overlay">
               <h5 class="genre-name"><%=genre%></h5>
@@ -74,11 +74,18 @@ $(document).ready(function() {
         
         // Submit to server
         $.post('/', { user: userName, genre: genreId })
-            .done(function() {
-                window.location.href = '/play';
+            .done(function(response) {
+                // Wait a moment to ensure session is saved
+                setTimeout(function() {
+                    window.location.href = '/play';
+                }, 100);
             })
-            .fail(function() {
-                M.toast({html: 'Error starting game. Please try again.', displayLength: 3000, classes: 'red'});
+            .fail(function(xhr) {
+                var errorMsg = 'Error starting game. Please try again.';
+                if (xhr.responseJSON && xhr.responseJSON.error) {
+                    errorMsg = xhr.responseJSON.error;
+                }
+                M.toast({html: errorMsg, displayLength: 3000, classes: 'red'});
                 location.reload();
             });
     });
