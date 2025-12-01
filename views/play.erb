@@ -1,55 +1,69 @@
 <div class="container" style="margin-top:5%" id="content"></div>
 
 <script id="mobileTemplate" type="text/html">
-	<div class="row" style="margin: 150px auto;width:75%;text-align:center;" id="mobilePrompt">
-		<p>Since you're using a mobile device, and mobile devices don't support autoplay, you'll need to click once more to start the game.</p>
-		<button class="btn waves-effect waves-light" type="submit" name="action" id="startMusic">Start The Music!</button>
+	<div class="mobile-prompt">
+		<i class="material-icons large">music_note</i>
+		<h5>Ready to Play?</h5>
+		<p>Tap below to start the music!</p>
+		<button class="btn-large waves-effect waves-light purple" id="startMusic">
+			<i class="material-icons left">play_arrow</i>Start The Music
+		</button>
 	</div>
 </script>
 
 <script id="pleaseWaitTemplate" type="text/x-jquery-tmpl">
-  <div class="row">
-    <div class="col s12 center-align">
-      <p class="flow-text">Please Wait...</p>
-      <div class="progress">
-        <div class="indeterminate"></div>
+  <div class="loading-screen">
+    <div class="preloader-wrapper big active">
+      <div class="spinner-layer spinner-purple-only">
+        <div class="circle-clipper left">
+          <div class="circle"></div>
+        </div>
+        <div class="gap-patch">
+          <div class="circle"></div>
+        </div>
+        <div class="circle-clipper right">
+          <div class="circle"></div>
+        </div>
       </div>
     </div>
+    <p class="loading-text">Loading your songs...</p>
   </div>
 </script>
 
 <script id="gameTemplate" type="text/html">
-  <div class="row teal lighten-4">
-    <div class="col s4">
-	Round <span id="round">1</span>
-    </div>
-    <div class="col s4 center-align">
-	<h4 class="hide-on-med-and-down">PickTun.es</h4>
-    </div>
-    <div class="col s4 right-align">
-	Score <span id="score">0</span>
-    </div>
-  </div>
-  <div class="row">
-    <div class="col s12">
-      <div class="center-align">
-        <p class="flow-text">Name That Tune in <span id="counter">20</span> Seconds!</p>
+  <div class="game-header">
+    <div class="game-stats">
+      <div class="stat-card">
+        <span class="stat-label">Round</span>
+        <span class="stat-value" id="round">1</span>
+      </div>
+      <div class="stat-card score-card">
+        <span class="stat-label">Score</span>
+        <span class="stat-value" id="score">0</span>
       </div>
     </div>
   </div>
-  <div class="row">
-    <div class="col s12" id="songsList"></div>
+  <div class="game-timer">
+    <div class="timer-circle">
+      <span id="counter" class="timer-value">20</span>
+    </div>
+    <p class="timer-label">Name That Tune!</p>
+  </div>
+  <div class="songs-container">
+    <div id="songsList"></div>
   </div>
 </script>
 
 <script id="songsTemplate" type="text/x-jquery-tmpl">
-  <ul class="collection">
-    <li class="collection-item avatar song" data-id="${id}">
-      <img src="${image}" alt="" class="circle cover">
-      <p class="flow-text">${name}</p>
-      <p class="artist">${artist}</p>
-    </li>
-  </ul>
+  <div class="song-card" data-id="${id}">
+    <div class="song-image">
+      <img src="${image}" alt="">
+    </div>
+    <div class="song-info">
+      <div class="song-name">${name}</div>
+      <div class="song-artist">${artist}</div>
+    </div>
+  </div>
 </script>
 
 <script id="rightAnswerTemplate" type="text/x-jquery-tmpl">

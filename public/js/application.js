@@ -72,7 +72,7 @@ var Game = (function() {
 
         $("#songsList").html($("#songsTemplate").tmpl(roundSongs));
 
-        $('#songsList').off('click', 'li.song').on('click', 'li.song', function() {
+        $('#songsList').off('click', '.song-card').on('click', '.song-card', function() {
             if ($(this).data('id') == selectedSong['id']) {
                 // correct answer
                 selectSong(true);
@@ -121,7 +121,7 @@ var Game = (function() {
             }
             $('#counter').html(counter);
             if (counter <= 10) {
-                $('.song .artist').fadeIn();
+                $('.song-artist').fadeIn();
             }
             if (counter <= 5) {
                 $('#counter').addClass('nearzero');
