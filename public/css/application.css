@@ -149,6 +149,226 @@
 .genre-card[data-genre-id="5"] { background: linear-gradient(135deg, #311b92 0%, #4527a0 50%, #512da8 100%); } /* Classical */
 .genre-card[data-genre-id="51"] { background: linear-gradient(135deg, #00bcd4 0%, #26c6da 50%, #4dd0e1 100%); } /* K-Pop */
 
+/* Toast Notifications */
+#toast-container {
+	top: 20px !important;
+	right: auto !important;
+	left: 50% !important;
+	transform: translateX(-50%);
+	min-width: 300px;
+	max-width: 90%;
+}
+
+.toast {
+	border-radius: 50px !important;
+	padding: 15px 30px !important;
+	font-size: 1.1rem !important;
+	font-weight: 500 !important;
+	box-shadow: 0 8px 20px rgba(0,0,0,0.2) !important;
+	animation: slideDown 0.3s ease-out !important;
+	background: linear-gradient(135deg, #667eea 0%, #764ba2 100%) !important;
+}
+
+.toast.red {
+	background: linear-gradient(135deg, #ff5252 0%, #f48fb1 100%) !important;
+}
+
+.toast.green {
+	background: linear-gradient(135deg, #4caf50 0%, #8bc34a 100%) !important;
+}
+
+@keyframes slideDown {
+	from {
+		opacity: 0;
+		transform: translateY(-30px);
+	}
+	to {
+		opacity: 1;
+		transform: translateY(0);
+	}
+}
+
+/* Scoreboard Page Styles */
+.scoreboard-page {
+	min-height: 100vh;
+	background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+}
+
+.game-over-banner {
+	background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+	padding: 40px 20px;
+	margin-bottom: 0;
+}
+
+.game-over-content {
+	text-align: center;
+	color: white;
+}
+
+.game-over-title {
+	margin: 0 0 20px 0;
+	font-size: 2rem;
+	font-weight: 300;
+	text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+}
+
+.final-score {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	margin-bottom: 30px;
+}
+
+.score-label {
+	font-size: 1rem;
+	opacity: 0.9;
+	margin-bottom: 10px;
+}
+
+.score-value {
+	font-size: 4rem;
+	font-weight: bold;
+	text-shadow: 3px 3px 6px rgba(0,0,0,0.3);
+	line-height: 1;
+	margin-bottom: 10px;
+}
+
+.score-genre {
+	font-size: 1.2rem;
+	opacity: 0.95;
+}
+
+.game-over-actions {
+	margin-top: 20px;
+}
+
+.game-over-actions .btn-flat {
+	background: rgba(255,255,255,0.2);
+	backdrop-filter: blur(10px);
+	border-radius: 25px;
+	padding: 0 25px;
+}
+
+.game-over-actions .btn-flat:hover {
+	background: rgba(255,255,255,0.3);
+}
+
+.scoreboard-header {
+	background: white;
+	padding: 20px 0;
+	box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.header-content {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	flex-wrap: wrap;
+	gap: 15px;
+}
+
+.header-left {
+	display: flex;
+	align-items: center;
+	gap: 15px;
+	flex-wrap: wrap;
+}
+
+.scoreboard-title {
+	margin: 0;
+	display: flex;
+	align-items: center;
+	gap: 10px;
+	color: #424242;
+	font-weight: 400;
+}
+
+.scoreboard-title i {
+	color: #ffd700;
+	font-size: 2rem;
+}
+
+.timeframe-badge {
+	background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+	color: white;
+	padding: 6px 16px;
+	border-radius: 20px;
+	font-size: 0.9rem;
+	font-weight: 500;
+}
+
+.tabs-container {
+	background: white;
+	box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+	margin-bottom: 0;
+	padding: 30px 0;
+}
+
+.tabs-wrapper {
+	display: flex;
+	justify-content: center;
+	max-width: 500px;
+	margin: 0 auto;
+}
+
+.tabs {
+	background: #f5f5f5;
+	border-radius: 50px;
+	padding: 6px;
+	height: auto;
+	overflow: visible;
+	display: flex;
+	box-shadow: inset 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.tabs .tab {
+	line-height: normal;
+	flex: 1;
+}
+
+.tabs .tab a {
+	color: #757575;
+	font-weight: 600;
+	text-transform: uppercase;
+	font-size: 1rem;
+	letter-spacing: 0.5px;
+	padding: 14px 40px;
+	height: auto;
+	line-height: normal;
+	border-radius: 50px;
+	transition: all 0.3s ease;
+	display: block;
+	text-align: center;
+}
+
+.tabs .tab a:hover {
+	color: #667eea;
+	background: rgba(102, 126, 234, 0.1);
+}
+
+.tabs .tab a.active {
+	background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+	color: white;
+	font-weight: 600;
+	box-shadow: 0 4px 8px rgba(102, 126, 234, 0.3);
+}
+
+.tabs .indicator {
+	display: none;
+}
+
+.scoreboard-content {
+	padding: 30px 15px;
+}
+
+.scores {
+	display: none;
+}
+
+.scores.active {
+	display: block;
+}
+
 /* Scoreboard Genre Cards */
 .scoreboard-genre-card {
 	border-radius: 8px;

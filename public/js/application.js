@@ -96,7 +96,7 @@ var Game = (function() {
           if (correct) {
             // right answer
             score = score + counter;
-            M.toast({html: '+ ' + counter + ' points!', displayLength: 3000});
+            M.toast({html: '🎉 +' + counter + ' points!', displayLength: 2000, classes: 'green rounded'});
             $('#score').html(score);
             console.log("We have a winner!");
             new Audio("/sounds/right.mp3").play();
