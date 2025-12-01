@@ -9,19 +9,21 @@
 </div>
 <div class="row random_color lighten-5 valign-wrapper z-depth-2" style="height:200px">
     <div class="container">
-	<form method="post" class="col m12 s12">
+	<form method="post" class="col m12 s12" id="startForm">
 		<div class="row">
 		<div class="input-field col s12 m4">
-			<input size="30" type="text" class="validate" maxlength="20" name="user" value="<%=@saved_name%>" required autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" />
+			<input id="user" size="30" type="text" class="validate" maxlength="20" minlength="1" name="user" value="<%=@saved_name%>" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" />
 			<label class="active" for="user">Pick a Name</label>
+			<span class="helper-text red-text" id="userError" style="display:none;">Please enter your name</span>
 		</div>
 			<div class="input-field col s12 m4">
-				<select name="genre" required="required">
+				<select name="genre" id="genre">
 					<option disabled selected value="">Pick a Genre</option>
 					<% settings.genres.each do |id,genre| %>
 					      <option value="<%=id%>"><%=genre%></option>
 					<% end %>
 				</select>
+				<span class="helper-text red-text" id="genreError" style="display:none;">Please select a genre</span>
 			</div>
 			<div class="input-field col s12 m4 center-align">
 				<button id="playButton" class="btn waves-effect waves-light" type="submit" name="action">Let's Play</button>
@@ -43,5 +45,46 @@
 $(document).ready(function() {
     M.FormSelect.init(document.querySelectorAll('select'));
     $('.random_color').addClass(Colors.getRandom());
+    
+    // Form validation
+    $('#startForm').on('submit', function(e) {
+        var isValid = true;
+        
+        // Validate name
+        var userName = $('#user').val().trim();
+        if (!userName || userName === '') {
+            $('#userError').show();
+            isValid = false;
+        } else {
+            $('#userError').hide();
+        }
+        
+        // Validate genre
+        var genre = $('#genre').val();
+        if (!genre || genre === '') {
+            $('#genreError').show();
+            isValid = false;
+        } else {
+            $('#genreError').hide();
+        }
+        
+        if (!isValid) {
+            e.preventDefault();
+            return false;
+        }
+    });
+    
+    // Hide error messages on input change
+    $('#user').on('input', function() {
+        if ($(this).val().trim() !== '') {
+            $('#userError').hide();
+        }
+    });
+    
+    $('#genre').on('change', function() {
+        if ($(this).val()) {
+            $('#genreError').hide();
+        }
+    });
 });
 </script>

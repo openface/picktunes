@@ -43,7 +43,7 @@
       <div class="col s12 m6 l4">
         <div class="card-panel random_color lighten-4">
           <h5><strong>${genre}</strong></h5>
-          <table>
+          <table class="striped responsive-table">
             <thead>
               <tr>
                 <th>#</th>
@@ -73,27 +73,35 @@
 <script>
 $(document).ready(function() {
 
-	$.get("/scores.json?filter=latest", function(data) {
-		$("#latest").html($("#scoresListTemplate").tmpl({
-			scores: data,
-			last_game_id: <%=@last_game ? @last_game.id : 'null'%>
-		}));
+	$.get("/scores.json?filter=latest")
+		.done(function(data) {
+			$("#latest").html($("#scoresListTemplate").tmpl({
+				scores: data,
+				last_game_id: <%=@last_game ? @last_game.id : 'null'%>
+			}));
 
-		$('.random_color').each(function() {
-			$(this).addClass(Colors.getRandom());
+			$('.random_color').each(function() {
+				$(this).addClass(Colors.getRandom());
+			});
+		})
+		.fail(function() {
+			$("#latest").html('<div class="col s12 center-align"><p class="red-text">Failed to load scores.</p></div>');
 		});
-	});
 
-	$.get("/scores.json?filter=all_time", function(data) {
-		$("#all_time").html($("#scoresListTemplate").tmpl({
-			scores: data,
-			last_game_id: <%=@last_game ? @last_game.id : 'null'%>
-		}));
+	$.get("/scores.json?filter=all_time")
+		.done(function(data) {
+			$("#all_time").html($("#scoresListTemplate").tmpl({
+				scores: data,
+				last_game_id: <%=@last_game ? @last_game.id : 'null'%>
+			}));
 
-		$('.random_color').each(function() {
-			$(this).addClass(Colors.getRandom());
+			$('.random_color').each(function() {
+				$(this).addClass(Colors.getRandom());
+			});
+		})
+		.fail(function() {
+			$("#all_time").html('<div class="col s12 center-align"><p class="red-text">Failed to load scores.</p></div>');
 		});
-	});
 
 	var tabs = M.Tabs.init(document.querySelector('.tabs'), {
 		onShow: function(el) {

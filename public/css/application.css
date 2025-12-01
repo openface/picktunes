@@ -10,15 +10,6 @@ li.song:hover {
 .song .artist {
 	display:none;
 }
-.scores {
-	display:flex;
-	flex-wrap:wrap;
-	align-items: flex-start;
-	justify-content:center;
-}
-.scores .card-panel {
-	margin:5px;
-}
 #counter {
 	font-size:24px;
 	font-weight:bold;

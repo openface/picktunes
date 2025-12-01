@@ -69,20 +69,25 @@ $("#content").html($("#pleaseWaitTemplate").tmpl());
 $(document).on(
 	'fbload',
 	function() {
-		$.get( "/songs.json", function(data) {
-                    Game.setSongs(data);
+		$.get("/songs.json")
+			.done(function(data) {
+				Game.setSongs(data);
 
-                    if (isMobile.any()) {
-                            $("#content").html($("#mobileTemplate").tmpl());
-                            $("#startMusic").click(function() {
-                                    $("#content").html($("#gameTemplate").tmpl())
-                                    Game.startRound();
-                            });
-                    } else {
-                            $("#content").html($("#gameTemplate").tmpl());
-                            Game.startRound();
-                    }
-		});
+				if (isMobile.any()) {
+					$("#content").html($("#mobileTemplate").tmpl());
+					$("#startMusic").click(function() {
+						$("#content").html($("#gameTemplate").tmpl())
+						Game.startRound();
+					});
+				} else {
+					$("#content").html($("#gameTemplate").tmpl());
+					Game.startRound();
+				}
+			})
+			.fail(function(xhr, status, error) {
+				console.error('Failed to load songs:', error);
+				$("#content").html('<div class="row"><div class="col s12 center-align"><p class="flow-text red-text">Failed to load songs. Please refresh the page.</p></div></div>');
+			});
 	}
 );
 </script>

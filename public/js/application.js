@@ -20,6 +20,7 @@ var Colors = (function() {
 var Game = (function() {
     var songs;
     var counter;
+    var counterPaused;
     var score = 0;
     var round = 0;
 
@@ -37,9 +38,17 @@ var Game = (function() {
         if (round > 10) {
             console.log("Game Over!");
             FB.AppEvents.logEvent("endedGame");
-            $.post("/endgame", { score: score }).done(function(data) {
-                window.location.replace("/scoreboard?last_game_id=" + data.last_game_id);
-            });
+            $.post("/endgame", { score: score })
+                .done(function(data) {
+                    window.location.replace("/scoreboard?last_game_id=" + data.last_game_id);
+                })
+                .fail(function(xhr, status, error) {
+                    console.error('Failed to save game:', error);
+                    M.toast({html: 'Failed to save score. Redirecting...', displayLength: 3000});
+                    setTimeout(function() {
+                        window.location.replace("/scoreboard");
+                    }, 3000);
+                });
             $('#content').html($('#pleaseWaitTemplate').tmpl());
             return;
         }
@@ -47,8 +56,8 @@ var Game = (function() {
         $('#counter').removeClass('nearzero');
         $('#counter').html(counter);
 
-        roundSongs = Game.songs.splice(0,4);
-        selectedSong = roundSongs[Math.floor(Math.random() * roundSongs.length)];
+        var roundSongs = Game.songs.splice(0,4);
+        var selectedSong = roundSongs[Math.floor(Math.random() * roundSongs.length)];
         //console.log(selectedSong);
 
         console.log("Score: " + score + " Round: " + round);
@@ -63,7 +72,7 @@ var Game = (function() {
 
         $("#songsList").html($("#songsTemplate").tmpl(roundSongs));
 
-        $('li.song').click(function() {
+        $('#songsList').off('click', 'li.song').on('click', 'li.song', function() {
             if ($(this).data('id') == selectedSong['id']) {
                 // correct answer
                 selectSong(true);

@@ -4,12 +4,14 @@ require "sinatra/reloader" if development?
 require 'json'
 require 'open-uri'
 require 'tilt/erb'
+require 'securerandom'
 
 #
 # Config
 
 configure do
   enable :sessions
+  set :session_secret, ENV['SESSION_SECRET'] || SecureRandom.hex(32)
   set :sessions, :expire_after => 2592000
 
   set :database, ENV['DATABASE_URL'] || 'mysql2://root@localhost/PICKTUNE'
@@ -64,11 +66,13 @@ end
 
 post '/' do
   name = Rack::Utils.escape_html(params[:user]).strip
-  redirect to('/') if name.empty? || !params[:genre]
+  genre_id = params[:genre].to_i
+  
+  redirect to('/') if name.empty? || !params[:genre] || !settings.genres.key?(genre_id)
 
   session.clear
   session[:user] = name
-  session[:genre] = params[:genre]
+  session[:genre] = genre_id
   
   # Remember the player's name in a cookie (expires in 1 year)
   response.set_cookie(:player_name, value: name, max_age: 31536000, path: '/')
@@ -83,35 +87,54 @@ get '/play/?' do
 end
 
 get '/songs.json/?' do
-  halt unless request.xhr?
+  halt 403 unless request.xhr?
+  halt 400, json(error: 'Session expired') unless session[:genre]
 
-  logger.info "Fetching songs for genre #{session[:genre]}"
+  genre = session[:genre].to_i
+  halt 400, json(error: 'Invalid genre') unless settings.genres.key?(genre)
+  
+  logger.info "Fetching songs for genre #{genre}"
 
-  response_body = URI.open("https://itunes.apple.com/us/rss/topsongs/limit=200/genre=#{session[:genre]}/json")
-  json_data = JSON.load(response_body)
-  songs = []
-  json_data['feed']['entry'].each do |entry|
-    songs << {
-      :id => entry['id']['attributes']['im:id'],
-      :artist => entry['im:artist']['label'],
-      :name => entry['im:name']['label'],
-      :image => entry['im:image'].first['label'],
-      :audio => entry['link'].last['attributes']['href']
-    }
+  begin
+    response_body = URI.open("https://itunes.apple.com/us/rss/topsongs/limit=200/genre=#{genre}/json")
+    json_data = JSON.load(response_body)
+    songs = []
+    json_data['feed']['entry'].each do |entry|
+      songs << {
+        :id => entry['id']['attributes']['im:id'],
+        :artist => entry['im:artist']['label'],
+        :name => entry['im:name']['label'],
+        :image => entry['im:image'].first['label'],
+        :audio => entry['link'].last['attributes']['href']
+      }
+    end
+    content_type :json
+    json songs.sample(40)
+  rescue => e
+    logger.error "Failed to fetch songs: #{e.message}"
+    halt 500, json(error: 'Failed to fetch songs')
   end
-  json songs.sample(40)
 end
 
 post '/endgame/?' do
-  game = Game.create(:username => session[:user], 
-              :genre => session[:genre], 
-              :score => params[:score], 
-              :created_at=>Time.now)
+  halt 400, json(error: 'Invalid score') unless params[:score] =~ /^\d+$/
+  
+  score = params[:score].to_i
+  halt 400, json(error: 'Invalid score range') if score < 0 || score > 200
+  
+  game = Game.create(
+    :username => session[:user], 
+    :genre => session[:genre].to_i, 
+    :score => score, 
+    :created_at => Time.now
+  )
+  
+  content_type :json
   json :last_game_id => game.id
 end
 
 get '/scores.json/?' do
-  halt unless request.xhr?
+  halt 403 unless request.xhr?
 
   games = Game.order(Sequel.desc(:score))
 
@@ -140,6 +163,7 @@ get '/scores.json/?' do
     end
   end
 
+  content_type :json
   json scores
 end
 
