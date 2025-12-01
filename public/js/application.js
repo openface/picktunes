@@ -62,7 +62,6 @@ var Game = (function() {
         };
 
         $("#songsList").html($("#songsTemplate").tmpl(roundSongs));
-        Materialize.showStaggeredList('#songsList');
 
         $('li.song').click(function() {
             if ($(this).data('id') == selectedSong['id']) {
@@ -88,7 +87,7 @@ var Game = (function() {
           if (correct) {
             // right answer
             score = score + counter;
-            Materialize.toast('+ ' + counter + ' points!', 3000);
+            M.toast({html: '+ ' + counter + ' points!', displayLength: 3000});
             $('#score').html(score);
             console.log("We have a winner!");
             new Audio("/sounds/right.mp3").play();

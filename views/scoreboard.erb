@@ -38,31 +38,35 @@
 </div>
 
 <script id="scoresListTemplate" type="text/x-jquery-tmpl">
-  {{each(genre,games) scores}}
-    <div class="card-panel random_color lighten-4">
-      <h5><strong>${genre}</strong></h5>
-      <table>
-        <thead>
-          <tr>
-            <th>#</th>
-            <th>NAME</th>
-            <th>SCORE</th>
-            <th>DATE</th>
-          </tr>
-        </thead>
-        <tbody>
-          {{each games}}
-            <tr class="${last_game_id == id ? 'yellow lighten-5' : ''}">
-              <td><strong>${index}</strong></td>
-              <td>${username}</td>
-              <td style="text-align:center;"><strong>${score}</strong></td>
-              <td>${created_at}</td>
-            </tr>
-          {{/each}}
-        </tbody>
-      </table>
-    </div>
-  {{/each}}
+  <div class="row">
+    {{each(genre,games) scores}}
+      <div class="col s12 m6 l4">
+        <div class="card-panel random_color lighten-4">
+          <h5><strong>${genre}</strong></h5>
+          <table>
+            <thead>
+              <tr>
+                <th>#</th>
+                <th>NAME</th>
+                <th>SCORE</th>
+                <th>DATE</th>
+              </tr>
+            </thead>
+            <tbody>
+              {{each games}}
+                <tr class="${last_game_id == id ? 'yellow lighten-5' : ''}">
+                  <td><strong>${index}</strong></td>
+                  <td>${username}</td>
+                  <td style="text-align:center;"><strong>${score}</strong></td>
+                  <td>${created_at}</td>
+                </tr>
+              {{/each}}
+            </tbody>
+          </table>
+        </div>
+      </div>
+    {{/each}}
+  </div>
 </script>
 
 
@@ -91,14 +95,13 @@ $(document).ready(function() {
 		});
 	});
 
-	$('ul.tabs').tabs({
+	var tabs = M.Tabs.init(document.querySelector('.tabs'), {
 		onShow: function(el) {
-			if (el.attr('id')=='all_time') {
+			if (el.id == 'all_time') {
 				$('#timeframe').html('All Time');
 			} else {
 				$('#timeframe').html('Latest');
 			}
-			Materialize.fadeInImage(el);
 		}
 	});
 });
