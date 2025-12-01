@@ -24,9 +24,16 @@ configure do
     7  => "Electronic",
     14 => "Pop",
     15 => "Soul",
-    18 => "Hip Hop",
+    18 => "Hip Hop/Rap",
     16 => "Soundtrack",
-    4  => "Kid Bop"
+    4  => "Kid Bop",
+    27 => "J-Pop",
+    29 => "Anime",
+    19 => "World",
+    17 => "Dance",
+    10 => "Singer/Songwriter",
+    5  => "Classical",
+    51  => "K-Pop"
   }
 
 end
@@ -72,6 +79,8 @@ end
 
 get '/songs.json/?' do
   halt unless request.xhr?
+
+  logger.info "Fetching songs for genre #{session[:genre]}"
 
   response_body = URI.open("https://itunes.apple.com/us/rss/topsongs/limit=200/genre=#{session[:genre]}/json")
   json_data = JSON.load(response_body)
