@@ -9,13 +9,19 @@ services:
      environment:
        MYSQL_ROOT_PASSWORD: picktunes
        MYSQL_DATABASE: PICKTUNES
+     healthcheck:
+       test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-ppicktunes"]
+       interval: 10s
+       timeout: 5s
+       retries: 5
    picktunes:
      build: 
        context: .
      image: picktunes:latest
      container_name: picktunes
      depends_on:
-       - db
+       db:
+         condition: service_healthy
      ports:
        - "4567:4567"
      restart: always
