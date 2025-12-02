@@ -664,98 +664,82 @@
 	gap: 8px;
 }
 
-.timer-clock-compact {
+.timer-visual {
 	position: relative;
 	display: flex;
 	align-items: center;
 	justify-content: center;
-	gap: 10px;
 }
 
-.clock-face-compact {
-	position: relative;
+.timer-circle {
 	width: 50px;
 	height: 50px;
-	border-radius: 50%;
-	background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-	box-shadow: 0 4px 8px rgba(102, 126, 234, 0.3),
-	            inset 0 1px 3px rgba(255,255,255,0.3);
-	border: 3px solid rgba(255,255,255,0.9);
-	flex-shrink: 0;
+	transform: rotate(-90deg);
 }
 
-.clock-center-compact {
+.timer-circle-bg {
+	fill: none;
+	stroke: rgba(255, 255, 255, 0.2);
+	stroke-width: 8;
+}
+
+.timer-circle-progress {
+	fill: none;
+	stroke: white;
+	stroke-width: 8;
+	stroke-linecap: round;
+	stroke-dasharray: 283;
+	stroke-dashoffset: 283;
+	transition: stroke-dashoffset 1s linear, stroke 0.3s ease;
+	filter: drop-shadow(0 2px 4px rgba(0,0,0,0.3));
+}
+
+.timer-circle-progress.warning {
+	stroke: #ffeb3b;
+}
+
+.timer-circle-progress.danger {
+	stroke: #ff5252;
+}
+
+.timer-value-inside {
 	position: absolute;
 	top: 50%;
 	left: 50%;
 	transform: translate(-50%, -50%);
-	width: 6px;
-	height: 6px;
-	background: white;
-	border-radius: 50%;
-	z-index: 10;
-	box-shadow: 0 1px 2px rgba(0,0,0,0.3);
-}
-
-.clock-hand-compact {
-	position: absolute;
-	top: 50%;
-	left: 50%;
-	width: 2px;
-	height: 18px;
-	background: white;
-	border-radius: 2px 2px 0 0;
-	transform-origin: bottom center;
-	transform: translate(-50%, -100%) rotate(0deg);
-	box-shadow: 0 1px 3px rgba(0,0,0,0.4);
-	transition: transform 1s linear;
-	z-index: 5;
-}
-
-.timer-value-compact {
-	color: #424242;
-	font-size: 1.8rem;
+	color: white;
+	font-size: 1.4rem;
 	font-weight: bold;
-	min-width: 35px;
 	text-align: center;
-	text-shadow: 0 1px 2px rgba(255,255,255,0.8);
+	text-shadow: 0 2px 4px rgba(0,0,0,0.4);
+	pointer-events: none;
+	transition: color 0.3s ease;
 }
 
-.timer-value-compact.nearzero {
+.timer-value-inside.warning {
+	color: #ffeb3b;
+	text-shadow: 0 2px 4px rgba(0,0,0,0.5);
+}
+
+.timer-value-inside.danger {
 	color: #ff5252;
-	animation: pulse 0.5s infinite;
-	text-shadow: 0 1px 2px rgba(255,255,255,0.9);
+	animation: pulse-color 0.5s infinite;
+	text-shadow: 0 2px 4px rgba(0,0,0,0.5);
 }
 
-@keyframes pulse {
-	0%, 100% { transform: scale(1); }
-	50% { transform: scale(1.1); }
+@keyframes pulse-color {
+	0%, 100% { opacity: 1; }
+	50% { opacity: 0.7; }
 }
 
 @media (max-width: 600px) {
-	.timer-clock-compact {
-		gap: 6px;
-	}
-	
-	.clock-face-compact {
+	.timer-circle {
 		width: 40px;
 		height: 40px;
-		border: 2px solid rgba(255,255,255,0.9);
 	}
 	
-	.clock-center-compact {
-		width: 5px;
-		height: 5px;
-	}
-	
-	.clock-hand-compact {
-		width: 2px;
-		height: 14px;
-	}
-	
-	.timer-value-compact {
-		font-size: 1.5rem;
-		min-width: 30px;
+	.timer-value-inside {
+		font-size: 1.2rem;
 	}
 }
 

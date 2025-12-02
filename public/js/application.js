@@ -121,9 +121,21 @@ var Game = (function() {
             }
             $('#counter').html(counter);
             
-            // Rotate clock hand - 360 degrees over 20 seconds (18 degrees per second)
-            var rotation = 360 - ((counter / 20) * 360);
-            $('#clockHand').css('transform', 'translate(-50%, -100%) rotate(' + rotation + 'deg)');
+            // Update circular progress - circumference is ~283, fills from 283 (empty) to 0 (full)
+            var progress = (counter / 20) * 283;
+            $('#timerProgress').css('stroke-dashoffset', progress);
+            
+            // Change color based on time remaining
+            if (counter <= 5) {
+                $('#timerProgress').removeClass('warning').addClass('danger');
+                $('#counter').removeClass('warning nearzero').addClass('danger');
+            } else if (counter <= 10) {
+                $('#timerProgress').removeClass('danger').addClass('warning');
+                $('#counter').removeClass('danger nearzero').addClass('warning');
+            } else {
+                $('#timerProgress').removeClass('warning danger');
+                $('#counter').removeClass('warning danger nearzero');
+            }
             
             if (counter <= 10) {
                 $('.song-artist').fadeIn();

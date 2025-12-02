@@ -39,12 +39,12 @@
       </div>
       <div class="stat-card timer-card">
         <span class="stat-label">Time Left</span>
-        <div class="timer-clock-compact">
-          <div class="clock-face-compact">
-            <div class="clock-center-compact"></div>
-            <div class="clock-hand-compact" id="clockHand"></div>
-          </div>
-          <span id="counter" class="timer-value-compact">20</span>
+        <div class="timer-visual">
+          <svg class="timer-circle" viewBox="0 0 100 100">
+            <circle class="timer-circle-bg" cx="50" cy="50" r="45"></circle>
+            <circle class="timer-circle-progress" id="timerProgress" cx="50" cy="50" r="45"></circle>
+          </svg>
+          <span id="counter" class="timer-value-inside">20</span>
         </div>
       </div>
       <div class="stat-card score-card">
