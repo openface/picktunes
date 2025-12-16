@@ -91,7 +91,10 @@ $(document).on(
 			.done(function(data) {
 				Game.setSongs(data);
 
-				if (isMobile.any()) {
+				// Safari requires user interaction before audio can play
+				var isSafari = /^((?!chrome|android).)*safari/i.test(navigator.userAgent);
+				
+				if (isMobile.any() || isSafari) {
 					$("#content").html($("#mobileTemplate").tmpl());
 					$("#startMusic").click(function() {
 						$("#content").html($("#gameTemplate").tmpl())
