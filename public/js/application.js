@@ -102,7 +102,7 @@ var Game = (function() {
             new Audio("/sounds/right.mp3").play();
             FB.AppEvents.logEvent("selectedRightAnswer");
             if (!isMobile.any()) {
-              $("#songsList").html($("#rightAnswerTemplate").tmpl());
+              $("#songsList").html($("#rightAnswerTemplate").tmpl(selectedSong));
             }
           } else {
             // wrong answer
@@ -110,7 +110,7 @@ var Game = (function() {
             new Audio("/sounds/wrong.mp3").play();
             FB.AppEvents.logEvent("selectedWrongAnswer");
             if (!isMobile.any()) {
-              $("#songsList").html($("#wrongAnswerTemplate").tmpl());
+              $("#songsList").html($("#wrongAnswerTemplate").tmpl(selectedSong));
             }
           }
         };

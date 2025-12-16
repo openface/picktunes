@@ -71,14 +71,35 @@
 </script>
 
 <script id="rightAnswerTemplate" type="text/x-jquery-tmpl">
-  <div class="center-align">
-    <img src="/images/right.png" />
+  <div class="answer-feedback correct">
+    <div class="feedback-icon">
+      <i class="material-icons">check_circle</i>
+    </div>
+    <div class="feedback-text">Correct!</div>
+    <div class="feedback-song">
+      <img src="${image}" alt="" class="feedback-song-image">
+      <div class="feedback-song-info">
+        <div class="feedback-song-name">${name}</div>
+        <div class="feedback-song-artist">${artist}</div>
+      </div>
+    </div>
   </div>
 </script>
 
 <script id="wrongAnswerTemplate" type="text/x-jquery-tmpl">
-  <div class="center-align">
-    <img src="/images/wrong.png" />
+  <div class="answer-feedback incorrect">
+    <div class="feedback-icon">
+      <i class="material-icons">cancel</i>
+    </div>
+    <div class="feedback-text">Wrong!</div>
+    <div class="feedback-subtext">It was...</div>
+    <div class="feedback-song">
+      <img src="${image}" alt="" class="feedback-song-image">
+      <div class="feedback-song-info">
+        <div class="feedback-song-name">${name}</div>
+        <div class="feedback-song-artist">${artist}</div>
+      </div>
+    </div>
   </div>
 </script>
 
