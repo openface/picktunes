@@ -1,4 +1,4 @@
-FROM ruby:2.7.4
+FROM ruby:3.2
 
 RUN apt-get update -qq && apt-get install -y build-essential default-mysql-client netcat-traditional
 
@@ -7,7 +7,7 @@ RUN mkdir $APP_HOME
 WORKDIR $APP_HOME
 
 ADD Gemfile* $APP_HOME/
-RUN gem install bundler -v 2.1.4 && bundle install
+RUN bundle install
 
 ADD . $APP_HOME
 
