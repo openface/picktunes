@@ -11,7 +11,7 @@ GEM
       stringio
       time
       uri
-    rack (2.2.7)
+    rack (2.2.22)
     rack-protection (3.0.6)
       rack
     ruby2_keywords (0.0.5)
