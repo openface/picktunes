@@ -28,5 +28,6 @@ services:
      environment:
        DATABASE_URL: mysql2://root:picktunes@db/PICKTUNES
        APP_ENV: ${APP_ENV:-development}
+       RACK_ENV: ${APP_ENV:-development}
 volumes:
     db_data: {}
