@@ -10,7 +10,7 @@ require 'securerandom'
 # Config
 
 configure do
-  set :protection, except: [:host_authorization]
+  disable :protection
 
   use Rack::Session::Cookie, 
     key: 'picktunes.session',
