@@ -27,5 +27,6 @@ services:
      restart: always
      environment:
        DATABASE_URL: mysql2://root:picktunes@db/PICKTUNES
+       APP_ENV: production
 volumes:
     db_data: {}
