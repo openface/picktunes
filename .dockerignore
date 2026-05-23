@@ -1,0 +1,31 @@
+# Secrets - never bake into the image
+.env
+.env.*
+
+# VCS
+.git
+.gitignore
+.gitattributes
+
+# CI / repo metadata (not needed at runtime)
+.github
+README.md
+
+# Docker (not needed inside the image)
+Dockerfile
+docker-compose.yml
+.dockerignore
+
+# Local bundle / build artifacts
+.bundle
+vendor/bundle
+tmp
+log
+
+# Editor / OS cruft
+.vscode
+.idea
+*.swp
+*.swo
+.DS_Store
+Thumbs.db
