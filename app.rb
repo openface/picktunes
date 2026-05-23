@@ -120,7 +120,7 @@ post '/' do
     max_age: 31536000,
     path: '/',
     http_only: true,
-    secure: production?,
+    secure: settings.production?,
     same_site: :lax
   )
 
