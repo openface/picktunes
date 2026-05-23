@@ -7,6 +7,7 @@
   <meta name="keywords" content="name that tune game, name that song game, name the song quiz, name that tune quiz, guess the song, song quiz, music quiz, name the song quiz, music quiz, tune quiz game, music guessing game, music guessing, guess the song, tunes, pick tunes, music">
   <meta name="author" content="Openface">
   <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="csrf-token" content="<%= csrf_token %>">
   <meta property="og:url" content="http://picktun.es" />
   <meta property="og:type" content="website" />
   <meta property="og:title" content="PickTun.es" />
@@ -26,6 +27,12 @@
 <script src="js/application.js"></script>
 
 <script>
+  $.ajaxPrefilter(function(options, originalOptions, jqXHR) {
+    if (!/^(GET|HEAD|OPTIONS)$/i.test(options.type)) {
+      jqXHR.setRequestHeader('X-CSRF-Token', $('meta[name="csrf-token"]').attr('content'));
+    }
+  });
+
   var isMobile = {
     Android: function() {
         return navigator.userAgent.match(/Android/i);
@@ -67,7 +74,7 @@
 
 </script>
 
-<%=yield%>	
+<%=yield%>
 
 </body>
 </html>

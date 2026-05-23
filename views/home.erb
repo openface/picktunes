@@ -12,7 +12,7 @@
       <div class="col s12 m8 offset-m2 l6 offset-l3">
         <div class="name-input-container">
           <div class="input-field">
-            <input id="user" type="text" class="validate name-input" maxlength="20" minlength="1" value="<%=@saved_name%>" placeholder="Enter Your Name" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" />
+            <input id="user" type="text" class="validate name-input" maxlength="20" minlength="1" value="<%=h @saved_name%>" placeholder="Enter Your Name" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" />
             <span class="helper-text red-text" id="userError" style="display:none;">Please enter your name</span>
           </div>
         </div>

@@ -10,15 +10,20 @@ require 'securerandom'
 # Config
 
 configure do
-  disable :protection
+  if ENV['SESSION_SECRET'].to_s.length < 64 && production?
+    raise 'SESSION_SECRET must be set to a value of at least 64 characters in production'
+  end
 
-  use Rack::Session::Cookie, 
+  use Rack::Session::Cookie,
     key: 'picktunes.session',
     path: '/',
-    secret: ENV['SESSION_SECRET'] || SecureRandom.hex(32),
+    secret: ENV['SESSION_SECRET'] || SecureRandom.hex(64),
     expire_after: 2592000,
     same_site: :lax,
-    http_only: true
+    http_only: true,
+    secure: production?
+
+  use Rack::Protection::AuthenticityToken
 
   set :database, ENV['DATABASE_URL'] || 'mysql2://root@localhost/PICKTUNE'
 
@@ -46,6 +51,29 @@ configure do
 
 end
 
+helpers do
+  def csrf_token
+    Rack::Protection::AuthenticityToken.token(session)
+  end
+
+  def h(text)
+    Rack::Utils.escape_html(text)
+  end
+end
+
+before do
+  response.headers['X-Content-Type-Options'] = 'nosniff'
+  response.headers['X-Frame-Options']        = 'SAMEORIGIN'
+  response.headers['Referrer-Policy']        = 'strict-origin-when-cross-origin'
+
+  if settings.production?
+    response.headers['Strict-Transport-Security'] = 'max-age=31536000; includeSubDomains'
+    if request.scheme == 'http'
+      redirect "https://#{request.host_with_port}#{request.fullpath}", 301
+    end
+  end
+end
+
 #
 # Database
 
@@ -71,10 +99,10 @@ get '/' do
 end
 
 post '/' do
-  name = Rack::Utils.escape_html(params[:user]).strip
+  name = params[:user].to_s.strip
   genre_id = params[:genre].to_i
-  
-  if name.empty? || !params[:genre] || !settings.genres.key?(genre_id)
+
+  if name.empty? || name.length > 20 || !settings.genres.key?(genre_id)
     if request.xhr?
       halt 400, json(error: 'Invalid input')
     else
@@ -85,10 +113,17 @@ post '/' do
   session.clear
   session[:user] = name
   session[:genre] = genre_id
-  
+
   # Remember the player's name in a cookie (expires in 1 year)
-  response.set_cookie(:player_name, value: name, max_age: 31536000, path: '/')
-  
+  response.set_cookie(:player_name,
+    value: name,
+    max_age: 31536000,
+    path: '/',
+    http_only: true,
+    secure: production?,
+    same_site: :lax
+  )
+
   if request.xhr?
     content_type :json
     json success: true
@@ -105,18 +140,21 @@ end
 
 get '/songs.json/?' do
   halt 403 unless request.xhr?
-  
-  logger.info "Session data: user=#{session[:user]}, genre=#{session[:genre]}"
+
   halt 400, json(error: 'Session expired - no genre') unless session[:genre]
 
   genre = session[:genre].to_i
   halt 400, json(error: 'Invalid genre') unless settings.genres.key?(genre)
-  
+
   logger.info "Fetching songs for genre #{genre}"
 
   begin
-    response_body = URI.open("https://itunes.apple.com/us/rss/topsongs/limit=200/genre=#{genre}/json")
-    json_data = JSON.load(response_body)
+    response_body = URI.open(
+      "https://itunes.apple.com/us/rss/topsongs/limit=200/genre=#{genre}/json",
+      open_timeout: 5,
+      read_timeout: 10
+    )
+    json_data = JSON.parse(response_body.read)
     songs = []
     json_data['feed']['entry'].each do |entry|
       songs << {
@@ -137,17 +175,17 @@ end
 
 post '/endgame/?' do
   halt 400, json(error: 'Invalid score') unless params[:score] =~ /^\d+$/
-  
+
   score = params[:score].to_i
   halt 400, json(error: 'Invalid score range') if score < 0 || score > 200
-  
+
   game = Game.create(
-    :username => session[:user], 
-    :genre => session[:genre].to_i, 
-    :score => score, 
+    :username => session[:user],
+    :genre => session[:genre].to_i,
+    :score => score,
     :created_at => Time.now
   )
-  
+
   content_type :json
   json :last_game_id => game.id
 end
@@ -191,4 +229,3 @@ get '/scoreboard/?' do
 
   erb :scoreboard
 end
-
