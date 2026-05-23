@@ -1,0 +1,22 @@
+name: Security
+
+on:
+  push:
+    branches: [master]
+  pull_request:
+  schedule:
+    - cron: '0 12 * * 1'
+
+jobs:
+  bundler-audit:
+    name: bundler-audit
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: '3.2'
+      - name: Install bundler-audit
+        run: gem install bundler-audit
+      - name: Check Gemfile.lock for known vulnerabilities
+        run: bundle-audit check --update
